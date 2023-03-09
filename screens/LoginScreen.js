@@ -10,6 +10,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/EmailValidator';
 import { passwordValidator } from '../helpers/PasswordValidator'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
@@ -23,6 +24,9 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
+    
+    // API call to login
+    const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
     navigation.reset({
       index: 0,
       routes: [{ name: 'HomeScreen' }],
@@ -32,7 +36,7 @@ export default function LoginScreen({ navigation }) {
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <Logo />
+      {/* <Logo /> */}
       <Header>Welcome back.</Header>
       <TextInput
         label="Email"

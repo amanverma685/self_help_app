@@ -19,8 +19,8 @@ const slides = [
   {
     id: '1',
     image: require('../assets/image1.png'),
-    title: 'Best Digital Solution',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Say Hi to your self-help care Journal',
+    subtitle: "Feel Better, Sleep Better We're a guided journal made with therapist.",
   },
   {
     id: '2',

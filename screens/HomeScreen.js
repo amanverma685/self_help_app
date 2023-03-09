@@ -1,10 +1,29 @@
-import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import React,{useEffect,useState} from 'react';
+import {StyleSheet, View,Text} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const Stack = createStackNavigator();
+
 const HomeScreen = () => {
-  return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>HomeScreen</Text>
+    //TODO
+    // Fetch Initial Survey Details and User Details  
+    const [daysFirstLogin, setDaysFirstLogin] = useState(false)
+
+
+    useEffect(() => {
+      
+    
+    }, [])
+    
+    
+    return (
+      <SafeAreaView>
+        <View>
+          <Text>HomeScreen</Text>
+          
+        </View>
     </SafeAreaView>
   );
 };

@@ -6,11 +6,11 @@ import { theme } from '../core/theme'
 export default function Background({ children }) {
   return (
     <ImageBackground
-      source={require('../assets/image1.png')}
+      source={require('../assets/image3.png')}
       
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView style={styles.container} behavior="height">
         {children}
       </KeyboardAvoidingView>
     </ImageBackground>
