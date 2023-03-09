@@ -12,14 +12,20 @@ const Stack = createStackNavigator();
 const App = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
-  React.useEffect(async () => {
-    const appData = await AsyncStorage.getItem('isAppFirstLaunched');
-    if (appData == null) {
+  React.useEffect( () => {
+    async function initialLaunch()
+    {
+      const appData = await AsyncStorage.getItem('isAppFirstLaunched');
+      if (appData == null) {
       setIsAppFirstLaunched(true);
       AsyncStorage.setItem('isAppFirstLaunched', 'false');
-    } else {
+      } 
+      else 
+      {
       setIsAppFirstLaunched(false);
+      }
     }
+    initialLaunch();
 
     // AsyncStorage.removeItem('isAppFirstLaunched');
   }, []);
