@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput.js';
@@ -27,9 +26,10 @@ export default function LoginScreen({ navigation }) {
     
     // API call to login
     const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
+    
     navigation.reset({
       index: 0,
-      routes: [{ name: 'HomeScreen' }],
+      routes: [{ name: 'LandingScreen' }],
     })
   }
 
