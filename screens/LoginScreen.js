@@ -10,7 +10,7 @@ import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/EmailValidator';
 import { passwordValidator } from '../helpers/PasswordValidator'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import RegistrationScreen from './RegistrationScreen';
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
@@ -71,7 +71,7 @@ export default function LoginScreen({ navigation }) {
       </Button>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.replace('RegistrationScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

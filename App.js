@@ -7,6 +7,8 @@ import RegistrationScreen from  './screens/RegistrationScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from './screens/LoginScreen';
 import LandingScreen from './screens/LandingScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import InitialQuizScreen from './screens/InitialQuizScreen';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -40,8 +42,10 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          {/* <Stack.Screen name="LoginScreen"   component={LoginScreen} />
-          <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} /> */}
+          <Stack.Screen name="LoginScreen"   component={LoginScreen} />
+          <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+          <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
+          <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
         </Stack.Navigator>
       </NavigationContainer>

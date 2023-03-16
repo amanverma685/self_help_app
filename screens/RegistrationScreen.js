@@ -12,7 +12,7 @@ import { emailValidator } from '../helpers/EmailValidator'
 import { passwordValidator } from '../helpers/PasswordValidator'
 import { nameValidator } from '../helpers/NameValidator'
 
-export default function RegisterScreen({ navigation }) {
+export default function RegistrationScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
@@ -36,7 +36,6 @@ export default function RegisterScreen({ navigation }) {
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <Logo />
       <Header>Create Account</Header>
       <TextInput
         label="Name"
