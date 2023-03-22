@@ -9,6 +9,11 @@ import LoginScreen from './screens/LoginScreen';
 import LandingScreen from './screens/LandingScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import InitialQuizScreen from './screens/InitialQuizScreen';
+import HomeScreen from './screens/HomeScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import AudioPlayerScreen from './screens/AudioPlayerScreen';
+import ArticleComponent from './components/ArticleComponent';
+
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -45,8 +50,13 @@ const App = () => {
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
-          <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
+          <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />          
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
+          <Stack.Screen name="ArticleComponent" component={ArticleComponent} />   
+
         </Stack.Navigator>
       </NavigationContainer>
 

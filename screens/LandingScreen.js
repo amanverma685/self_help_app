@@ -7,15 +7,14 @@ import SessionScreen from './SessionScreen'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import InitialQuizScreen from './InitialQuizScreen';
 const Tab = createMaterialBottomTabNavigator();
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
 
-const LandingScreen = (navigate) => {
+
+const LandingScreen = () => {
 
   const [isIntialSessionCompleted,setInitialSessionCompleted]= useState(true);
   
   useEffect(() => {
-
+    
   
     return () => {
       
@@ -24,7 +23,7 @@ const LandingScreen = (navigate) => {
 
   return (
 
-    isIntialSessionCompleted==true && (<Tab.Navigator
+    (isIntialSessionCompleted==true) && (<Tab.Navigator
     initialRouteName="HomeScreen"
     activeColor="blue"
     inactiveColor="black"
@@ -63,7 +62,7 @@ const LandingScreen = (navigate) => {
       />
       <Tab.Screen
         name="Chat"
-        component={SessionScreen}
+        component={ChatScreen}
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ color }) => (
@@ -81,9 +80,9 @@ const LandingScreen = (navigate) => {
           ),
         }}
       />
-    </Tab.Navigator>),
+    </Tab.Navigator>)||
     
-    isIntialSessionCompleted==false  && <InitialQuizScreen />
+    (isIntialSessionCompleted==false)  && <InitialQuizScreen />
     
 
   );

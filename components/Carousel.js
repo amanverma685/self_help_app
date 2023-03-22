@@ -1,34 +1,42 @@
 import React from 'react';
-import { FlatList, View } from 'react-native';
-import tw from 'nativewind';
+import { View, Image } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 
-const data = [
-  { id: '1', title: 'Item 1' },
-  { id: '2', title: 'Item 2' },
-  { id: '3', title: 'Item 3' },
-  { id: '4', title: 'Item 4' },
-  { id: '5', title: 'Item 5' },
+const images = [
+  {
+    id: 1,
+    url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0j2iyfpMN3kWQgkzOpXu0xrKxkF7STUIZDw&usqp=CAU',
+  },
+  {
+    id: 2,
+    url: 'https://wallpaperset.com/w/full/a/e/5/36131.jpg',
+  },
+  {
+    id: 3,
+    url: 'https://www.pixelstalk.net/wp-content/uploads/images6/Calming-Wallpaper-High-Resolution.jpg',
+  },
 ];
 
-const Carousel = () => {
+const CarouselWithImages = () => {
   const renderItem = ({ item }) => (
-    <View style={tw`p-4 bg-white rounded-lg shadow-lg`}>
-      <Text>{item.title}</Text>
+    <View className="mt-4">
+      <View className="w-full h-40">
+        <Image className="w-full h-full" source={{ uri: item.url }} />
+      </View>
     </View>
   );
 
   return (
-    <FlatList
-      data={data}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      keyExtractor={item => item.id}
+    <Carousel
+      data={images}
       renderItem={renderItem}
-      contentContainerStyle={tw`px-4`}
-      snapToInterval={350}
-      decelerationRate="fast"
+      sliderWidth={400}
+      itemWidth={300}
+      loop={true}
+      autoplay={true}
+      autoplayInterval={5000}
     />
   );
 };
 
-export default Carousel;
+export default CarouselWithImages;
