@@ -16,14 +16,17 @@ const ArticleComponent = (item) => {
     {    
         if(item.item.article_type==='audio')
         {
-          console.log("Its and audio");
-          navigation.navigate('AudioPlayerScreen');
+          navigation.navigate('AudioPlayerScreen',{item});
         }
         else if(item.item.article_type==='video')
         {
-          console.log("its an video");
-          navigation.navigate('LandingScreen');
+          navigation.navigate('VideoPlayerScreen',{item});
         }
+        else if(item.item.article_type==='reading')
+        {
+          navigation.navigate('ReadingScreen',{item });
+        }
+
     }
 
   return (

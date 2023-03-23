@@ -13,6 +13,8 @@ import HomeScreen from './screens/HomeScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import AudioPlayerScreen from './screens/AudioPlayerScreen';
 import ArticleComponent from './components/ArticleComponent';
+import ReadingScreen from './screens/ReadingScreen';
+import VideoPlayerScreen from './screens/VideoPlayerScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,7 +36,7 @@ const App = () => {
     }
     initialLaunch();
 
-    AsyncStorage.removeItem('isAppFirstLaunched');
+    // AsyncStorage.removeItem('isAppFirstLaunched');
   }, []);
 
   return (
@@ -56,6 +58,8 @@ const App = () => {
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
           <Stack.Screen name="ArticleComponent" component={ArticleComponent} />   
+          <Stack.Screen name="VideoPlayerScreen" component={VideoPlayerScreen} />   
+          <Stack.Screen name="ReadingScreen" component={ReadingScreen} />   
 
         </Stack.Navigator>
       </NavigationContainer>

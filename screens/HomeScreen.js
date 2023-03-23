@@ -89,8 +89,8 @@ const HomeScreen = ({navigation}) => {
       <TouchableOpacity className="mt-3 ml-1 mr-2">
         <View className="flex-row  justify-between h-14 w-full bg-blue-500 rounded-lg p-3">
           <Text className="text-white text-xl "> Complete Your Journey</Text>
-          <View className="h-16">
-          <Button  mode="contained" onPress={() => console.log('Pressed')}>
+          <View className="h-14">
+          <Button  mode="contained" onPress={() => navigation.navigate('SessionScreen')}>
               Check Progress
           </Button>
           </View>

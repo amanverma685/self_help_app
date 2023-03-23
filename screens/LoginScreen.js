@@ -11,6 +11,8 @@ import { emailValidator } from '../helpers/EmailValidator';
 import { passwordValidator } from '../helpers/PasswordValidator'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RegistrationScreen from './RegistrationScreen';
+
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
