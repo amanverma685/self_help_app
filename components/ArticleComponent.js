@@ -3,13 +3,13 @@ import React,{useState,useEffect} from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { IconButton } from 'react-native-paper'
 
-
 const ArticleComponent = (item) => {
     const [article_item,setArticleItem]=useState({});
     const navigation = item.navigation;
 
     useEffect(() => {
       setArticleItem(item.item);
+      console.log(article_item.imageURL);
     }, [])
     
     const handleArticle = (item) =>
@@ -24,7 +24,7 @@ const ArticleComponent = (item) => {
         }
         else if(item.item.article_type==='reading')
         {
-          navigation.navigate('ReadingScreen',{item });
+          navigation.navigate('ReadingScreen',{item});
         }
 
     }
@@ -34,7 +34,7 @@ const ArticleComponent = (item) => {
         <View style={styles.container_outer}>
             <View style={styles.container}>
                 <Image
-                source={require('../assets/image1.png')}
+                source={{ uri: article_item.imageURL }}
                 style={styles.image}
                 resizeMode="cover"
                 />
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
       overflow: 'hidden',
     },
     container_outer: {
-        width: 130,
-        height: 130,
+        width: 140,
+        height: 140,
         borderRadius: 10,
         overflow: 'hidden',
         borderColor:'black',

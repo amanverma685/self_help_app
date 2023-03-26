@@ -6,7 +6,7 @@ const MCQQuestion = ({ question, options, onSelect,imageURL }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelectOption = (option) => {
-    setSelectedOption(option);
+    setSelectedOption(option);-
     onSelect(option);
   };
 

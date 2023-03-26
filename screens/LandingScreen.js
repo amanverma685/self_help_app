@@ -6,6 +6,7 @@ import ChatScreen from './ChatScreen';
 import SessionScreen from './SessionScreen'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import InitialQuizScreen from './InitialQuizScreen';
+import ProfileScreen from './ProfileScreen';
 const Tab = createMaterialBottomTabNavigator();
 
 
@@ -72,7 +73,7 @@ const LandingScreen = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={SessionScreen}
+        component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

@@ -9,15 +9,64 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/EmailValidator';
 import { passwordValidator } from '../helpers/PasswordValidator'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import RegistrationScreen from './RegistrationScreen';
-
+import { loginURL, loginURL_v2 } from '../services/urls';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Alert from 'react-native-alert-component';
 
 export default function LoginScreen({ navigation }) {
+  
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [isVisible, setIsVisible] = useState(false);
 
-  const onLoginPressed = () => {
+  const [error,setError]=useState("");
+
+  let token;
+
+  const handleLogin = async(event) => {
+        await axios.post(loginURL, {
+            email: email,
+            password: password
+        }, config)
+        .then((response) => {
+            token = response.headers['authorization'];
+            token = token.substring(7);
+            console.log("authorization header", token);
+            AsyncStorage.setItem('jwtToken', token);
+            handleLoginV2();
+        })
+        .catch((error) => {
+            console.log(error);
+            setError(error);
+            setIsVisible(true);
+        })
+    }
+
+    let config = {
+        headers: {
+          Authorization: AsyncStorage.getItem('jwtToken')
+          }
+        }
+
+    const handleLoginV2 = async(event) => {
+
+        await axios.post(loginURL_v2, {
+            email: email,
+            password: password
+        }, config)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+
+            console.log(error);
+        })
+    }
+
+
+  const onLoginPressed = async() => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
@@ -26,6 +75,8 @@ export default function LoginScreen({ navigation }) {
       return
     }
     
+    await handleLogin();
+
     // API call to login
     const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
     
@@ -36,10 +87,9 @@ export default function LoginScreen({ navigation }) {
   }
 
   return (
-    <Background>
+    (isVisible===false) ? (<Background>
       <BackButton goBack={navigation.goBack} />
-      {/* <Logo /> */}
-      <Header>Welcome back.</Header>
+      <Header>Welcome back...</Header>
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -77,7 +127,15 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
-    </Background>
+    </Background>):
+    (<Alert
+    visible={isVisible}
+    title="Alert Title"
+    message={error}
+    onCancelPressed={setIsVisible(false)}
+    onConfirmPressed={setIsVisible(false)}
+  />)
+
   )
 }
 
