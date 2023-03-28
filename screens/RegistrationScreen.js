@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity,ScrollView,Alert } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -11,39 +11,105 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/EmailValidator'
 import { passwordValidator } from '../helpers/PasswordValidator'
 import { nameValidator } from '../helpers/NameValidator'
+import {registerUser } from '../services/urls';
+import axios from 'axios';
+
 
 export default function RegistrationScreen({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
+  const [fname, setfName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const [mname, setmName] = useState({ value: '', error: '' })
+  const [lname, setlName] = useState({ value: '', error: '' })
+  const [gender, setGender] = useState({ value: '', error: '' })
+  const [dateOfBirth, setDateOfBirth] = useState({ value: '', error: '' })
+  const [contact,setContact]=useState({ value: '', error: '' });
 
-  const onSignUpPressed = () => {
-    const nameError = nameValidator(name.value)
+  const onSignUpPressed = async() => {
+    const nameError = nameValidator(fname.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError })
+      setfName({ ...fname, error: nameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'HomeScreen' }],
-    })
+      await axios.post (registerUser, {
+              firstName:fname['value'],
+              middleName:mname['value'],
+              lastName:lname['value'],
+              email: email['value'],
+              password: password['value'],
+              gender:gender['value'],
+              dob:dateOfBirth['value'],
+              contact:contact['value']
+          }).then((response) => 
+          {
+            if(response.status==200)
+            {
+              Alert.alert(
+                'User Registered !!',
+                'Your data has been saved successfully',
+                [
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: 'LoginScreen' }],
+                    });
+                  }
+                  }
+                ]
+              );
+            }
+      })
+      .catch((error) => {
+          console.log(error);
+          Alert.alert(
+            'Oops an error occurred',
+            'Please try again after some time',
+            [
+              {
+                text: 'OK',
+                onPress: () => {}
+              }
+            ]
+          );
+      });
+
   }
 
   return (
-    <Background>
+    <ScrollView>
+      <Background>
       <BackButton goBack={navigation.goBack} />
       <Header>Create Account</Header>
       <TextInput
-        label="Name"
+        label="First Name "
         returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        value={fname.value}
+        onChangeText={(text) => setfName({ value: text, error: '' })}
+        error={!!fname.error}
+        errorText={fname.error}
+      />
+      <TextInput
+        label="Middle Name "
+        returnKeyType="next"
+        value={mname.value}
+        onChangeText={(text) => setmName({ value: text, error: '' })}
+        error={!!mname.error}
+        errorText={mname.error}
+      />
+      <TextInput
+        label="Last Name "
+        returnKeyType="next"
+        value={lname.value}
+        onChangeText={(text) => setlName({ value: text, error: '' })}
+        error={!!lname.error}
+        errorText={lname.error}
       />
       <TextInput
         label="Email"
@@ -58,6 +124,30 @@ export default function RegistrationScreen({ navigation }) {
         keyboardType="email-address"
       />
       <TextInput
+        label="Gender"
+        returnKeyType="next"
+        value={gender.value}
+        onChangeText={(text) => setGender({ value: text, error: '' })}
+        error={!!gender.error}
+        errorText={gender.error}
+      />
+      <TextInput
+        label="Date of Birth"
+        returnKeyType="next"
+        value={dateOfBirth.value}
+        onChangeText={(text) => setDateOfBirth({ value: text, error: '' })}
+        error={!!dateOfBirth.error}
+        errorText={dateOfBirth.error}
+      />
+      <TextInput
+        label="Contact"
+        returnKeyType="next"
+        value={contact.value}
+        onChangeText={(text) => setContact({ value: text, error: '' })}
+        error={!!contact.error}
+        errorText={contact.error}
+      />
+      <TextInput
         label="Password"
         returnKeyType="done"
         value={password.value}
@@ -66,6 +156,7 @@ export default function RegistrationScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
+      
       <Button
         mode="contained"
         onPress={onSignUpPressed}
@@ -80,13 +171,14 @@ export default function RegistrationScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </Background>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    marginTop: 4,
+    marginTop: 3,
   },
   link: {
     fontWeight: 'bold',

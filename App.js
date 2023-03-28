@@ -15,6 +15,7 @@ import AudioPlayerScreen from './screens/AudioPlayerScreen';
 import ArticleComponent from './components/ArticleComponent';
 import ReadingScreen from './screens/ReadingScreen';
 import VideoPlayerScreen from './screens/VideoPlayerScreen';
+import SessionScreen from './screens/SessionScreen';
 
 const Stack = createStackNavigator();
 
@@ -49,8 +50,9 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          {/* <Stack.Screen name="LoginScreen"   component={LoginScreen} /> */}
+          <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen name="SessionScreen" component={SessionScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />          

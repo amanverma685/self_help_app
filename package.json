@@ -11,6 +11,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/slider": "4.2.4",
+    "@react-native-picker/picker": "2.4.8",
     "@react-navigation/material-bottom-tabs": "^6.2.15",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
@@ -25,6 +26,7 @@
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-alert-component": "^1.0.7",
+    "react-native-elements": "^3.4.3",
     "react-native-flip-card": "^3.5.7",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-modal": "^13.0.1",
@@ -35,6 +37,7 @@
     "react-native-screens": "~3.18.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-status-bar-height": "^2.6.0",
+    "react-native-tailwindcss": "^1.1.11",
     "react-native-track-player": "^3.2.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "11.23.1",

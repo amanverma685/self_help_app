@@ -7,20 +7,21 @@ import SessionScreen from './SessionScreen'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import InitialQuizScreen from './InitialQuizScreen';
 import ProfileScreen from './ProfileScreen';
+import MoodLiftScreen from './MoodLiftScreen';
 const Tab = createMaterialBottomTabNavigator();
 
 
-const LandingScreen = () => {
-
+const LandingScreen = ({ route }) => {
+  const { userData } = route.params;
+  console.log(userData);
   const [isIntialSessionCompleted,setInitialSessionCompleted]= useState(true);
   
-  useEffect(() => {
-    
-  
-    return () => {
-      
-    }
-  }, []);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const reloadScreen = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  }
+
 
   return (
 
@@ -34,6 +35,7 @@ const LandingScreen = () => {
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
+        onPress={reloadScreen} 
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color}) => (
@@ -44,6 +46,7 @@ const LandingScreen = () => {
       <Tab.Screen
         name="SessionScreen"
         component={SessionScreen}
+        onPress={reloadScreen} 
         options={{
           tabBarLabel: 'Session',
           tabBarIcon: ({ color }) => (
@@ -53,7 +56,8 @@ const LandingScreen = () => {
       />
       <Tab.Screen
         name="Relax"
-        component={SessionScreen}
+        component={MoodLiftScreen}
+        onPress={reloadScreen} 
         options={{
           tabBarLabel: 'MoodLift',
           tabBarIcon: ({ color }) => (
@@ -64,6 +68,7 @@ const LandingScreen = () => {
       <Tab.Screen
         name="Chat"
         component={ChatScreen}
+        onPress={reloadScreen} 
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ color }) => (
@@ -74,6 +79,7 @@ const LandingScreen = () => {
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
+        onPress={reloadScreen} 
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

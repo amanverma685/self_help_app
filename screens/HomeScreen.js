@@ -5,8 +5,6 @@ import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native-gestu
 import { Avatar, Button, IconButton } from "react-native-paper";
 import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
-import Seperator from '../components/Seperator'
-// import CardComponent from '../components/CardComponent';
 import { MD3Colors } from 'react-native-paper';
 import FlipCardComponent from '../components/FlipCard';
 import doctorArticleData from '../dummy_data/doctors_article'
@@ -31,6 +29,11 @@ const HomeScreen = ({navigation}) => {
       setLoading(false);
     }
   };
+
+  const goToProfileScreen=()=>
+  {
+    navigation.navigate('ProfileScreen');
+  }
 
   const getArticleList = async () => {
     setArticleLoading(false);
@@ -67,15 +70,17 @@ const HomeScreen = ({navigation}) => {
                 <View>
                     <Text className="m-4 font-bold text-lg"> Good Morning, <Text style={{fontSize:30}}> Aman</Text> </Text>
                 </View> 
-                  <View className="mr-3">
-                    <Avatar.Image
-                          className = {20}
-                          size={50}
-                          source={{
-                              uri: `http://www.goodmorningimagesdownload.com/wp-content/uploads/2019/10/Happy-Whatsapp-DP-Profile-Images-4.jpg`,
-                          }}
-                      />
-                  </View>
+                  <TouchableOpacity onPress={goToProfileScreen}>
+                    <View className="mr-3">
+                      <Avatar.Image
+                            className = {20}
+                            size={50}
+                            source={{
+                                uri: `http://www.goodmorningimagesdownload.com/wp-content/uploads/2019/10/Happy-Whatsapp-DP-Profile-Images-4.jpg`,
+                            }}
+                        />
+                    </View>
+                  </TouchableOpacity>
               </View>
             <View className="m-3 ml-1">
             <SearchBar/>
