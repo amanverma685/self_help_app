@@ -6,14 +6,14 @@ const MCQQuestion = ({ question, options, onSelect,imageURL }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelectOption = (option) => {
-    setSelectedOption(option);-
+    setSelectedOption(option);
     onSelect(option);
   };
 
   return (
     <SafeAreaProvider>
       <View>
-        
+
         <View>
         <Image source={require('../assets/ballon.png')} />
           <Text className=" font-bold text-xl p-2">{question}</Text>

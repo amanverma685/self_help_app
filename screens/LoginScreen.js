@@ -48,49 +48,42 @@ export default function LoginScreen({ navigation }) {
           password:password['value']
           }, config);
 
-          console.log(response2['data']);
+          if(response2.status===200)
+          { console.log(response2.data)
+            await AsyncStorage.setItem('id', response2.data.id);
+            await AsyncStorage.setItem('firstName',response2.data.firstName);
+            await AsyncStorage.setItem('contact',response2.data.contact);
+            await AsyncStorage.setItem('email',response2.data.email);
+            await AsyncStorage.setItem('dob',response2.data.dob);        
+            await AsyncStorage.setItem('middleName',response2.data.middleName);        
+            await AsyncStorage.setItem('lastName',response2.data.lastName);  
+            await AsyncStorage.setItem('token',token);    
+            if(response2.data.sessionDone === -1)    
+              await AsyncStorage.setItem('initialSessionCompleted',"No");  
+            else       
+              await AsyncStorage.setItem('initialSessionCompleted',"Yes");
+
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'LandingScreen' }],
+            });
+          }
+        
 
         } catch (error) {
-          console.log(error);
+          return (Alert.alert(
+            'Invalid Credentials',
+            'Please try again with correct credentials',
+            [
+              {
+                text: 'Continue',
+                onPress: {}
+              }
+            ]
+          ));
+
         }
-        
-    //     await axios.post ( loginURL, {
-    //             username: email['value'],
-    //             password: password['value']
-    //         }).then((response) => 
-    //         {
-    //         setToken(response.headers['authorization']);
-            
-    //     })
-    //     .catch((error) => {
-    //         setError(error);
-    //         setIsVisible(true);
-    //     });
 
-    //     let config = {
-    //       headers: {
-    //           Authorization: token   
-    //               }
-    //   };
-
-    //     await axios.post(loginURL_v2, {
-    //       username: email['value'],
-    //       password: password['value']
-    //     }, config)
-    //     .then((response) => {
-    //       console.log(response);
-    //         setUserData(response['data']);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })  
-    // //   navigation.reset({
-    // //   index: 0,
-    // //   routes: [{ name: 'LandingScreen',
-    // //   params :{data:userData}
-    // // }],
-    // // })
-        
     }
     
 
@@ -106,7 +99,6 @@ export default function LoginScreen({ navigation }) {
     await handleLogin();
 
     const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
-    
    
   }
 

@@ -1,6 +1,7 @@
 import { View,ActivityIndicator, StyleSheet,Text,Image,Linking } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import { WebView } from 'react-native-webview';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const ReadingScreen = ({route}) => {
 
@@ -24,7 +25,8 @@ const ReadingScreen = ({route}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider>
+      <View style={styles.container}>
       {isLoading && (
         <ActivityIndicator
           size="large"
@@ -37,6 +39,7 @@ const ReadingScreen = ({route}) => {
         onLoad={handleLoad}
       />
     </View>
+    </SafeAreaProvider>
   );
 }
 

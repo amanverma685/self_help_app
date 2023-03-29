@@ -3,13 +3,28 @@ import React,{useEffect,useState} from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MCQQuestion from '../components/QuizComoponentMCQ'
-import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const InitialQuizScreen = () => {
-  const navigation = useNavigation();
+const InitialQuizScreen = ({ onPress }) => {
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [firstName,setFirstName]=useState()
+
+  useEffect(() => {
+    setFirstNameMethod();
+  }, [])
+  
+  const setFirstNameMethod=async()=>{
+    const fName = await AsyncStorage.getItem('firstName');
+    setFirstName(fName);
+  }
+  
+  const handleSubmit=()=>{
+    AsyncStorage.setItem('initialSessionCompleted',"Yes");
+    onPress();
+  }
 
   const questions = [
     {
@@ -31,6 +46,7 @@ const InitialQuizScreen = () => {
       imageLocation:'../assets/ballon.png',
     },
   ];
+
   const handleAnswer = (option) => {
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = option;
@@ -64,8 +80,8 @@ const InitialQuizScreen = () => {
     <SafeAreaProvider>
       <ScrollView className="p-2">
         <View>
-            <Text className="text-black font-bold text-xl mb-2">
-              Hey Aman, We have some questions for you
+            <Text className="text-black font-bold text-xl mb-2 mt-6">
+              Hey {firstName}, We have some questions for you
             </Text>
           <View>
             <MCQQuestion
@@ -84,9 +100,7 @@ const InitialQuizScreen = () => {
           {isVisible && (
             <Button 
             title="Submit"
-            onPress={() => 
-            navigation.navigate('LandingScreen')
-            }
+            onPress={handleSubmit}
             />
             )}
           </View>

@@ -73,7 +73,7 @@ export default function RegistrationScreen({ navigation }) {
             'Please try again after some time',
             [
               {
-                text: 'OK',
+                text: 'Continue',
                 onPress: () => {}
               }
             ]

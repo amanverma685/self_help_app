@@ -9,6 +9,7 @@ import { MD3Colors } from 'react-native-paper';
 import FlipCardComponent from '../components/FlipCard';
 import doctorArticleData from '../dummy_data/doctors_article'
 import ArticleComponent from '../components/ArticleComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
 
@@ -16,8 +17,11 @@ const HomeScreen = ({navigation}) => {
   const [isLoading, setLoading] = useState(true);
   const [articlesList,setArticlesList]=useState([]);
   const [articleLoading,setArticleLoading] = useState(true);
+  const [firstName,setFirstName]=useState("");
 
   const getTenRandomJokes = async () => {
+    const value = await AsyncStorage.getItem('firstName');
+    setFirstName(value);
     setLoading(true);
     try {
       const response = await fetch('https://official-joke-api.appspot.com/random_ten');
@@ -68,7 +72,7 @@ const HomeScreen = ({navigation}) => {
             <View className="pt-3">
               <View className="flex-row justify-between">
                 <View>
-                    <Text className="m-4 font-bold text-lg"> Good Morning, <Text style={{fontSize:30}}> Aman</Text> </Text>
+                    <Text className="m-4 font-bold text-xl">Welcome Back, <Text style={{fontSize:25}}>{firstName}</Text> </Text>
                 </View> 
                   <TouchableOpacity onPress={goToProfileScreen}>
                     <View className="mr-3">

@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import HomeScreen from './HomeScreen';
@@ -8,24 +7,38 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import InitialQuizScreen from './InitialQuizScreen';
 import ProfileScreen from './ProfileScreen';
 import MoodLiftScreen from './MoodLiftScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Tab = createMaterialBottomTabNavigator();
 
-
-const LandingScreen = ({ route }) => {
-  const { userData } = route.params;
-  console.log(userData);
-  const [isIntialSessionCompleted,setInitialSessionCompleted]= useState(true);
+const LandingScreen = ({ navigation }) => {
   
+  const [isIntialSessionCompleted,setInitialSessionCompleted]= useState("");
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const initialSession = async() => {    
+    const session = await AsyncStorage.getItem('initialSessionCompleted');
+    setInitialSessionCompleted(session);
+  }  
 
   const reloadScreen = () => {
     setRefreshKey(prevKey => prevKey + 1);
   }
 
+  const [reload, setReload] = useState(false);
+
+  const reloadParent = () => {
+    setReload(true);
+  };
+
+  useEffect(() => {
+    initialSession();
+  }, [reload])
+  
 
   return (
 
-    (isIntialSessionCompleted==true) && (<Tab.Navigator
+    (isIntialSessionCompleted==="Yes") && (<Tab.Navigator
     initialRouteName="HomeScreen"
     activeColor="blue"
     inactiveColor="black"
@@ -89,7 +102,7 @@ const LandingScreen = ({ route }) => {
       />
     </Tab.Navigator>)||
     
-    (isIntialSessionCompleted==false)  && <InitialQuizScreen />
+    (isIntialSessionCompleted==="No")  && <InitialQuizScreen  onPress={reloadParent}  />
     
 
   );
