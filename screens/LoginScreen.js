@@ -85,8 +85,6 @@ export default function LoginScreen({ navigation }) {
         }
 
     }
-    
-
   const onLoginPressed = async() => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -95,11 +93,8 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    
     await handleLogin();
-
     const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
-   
   }
 
   return (

@@ -16,6 +16,7 @@ import ArticleComponent from './components/ArticleComponent';
 import ReadingScreen from './screens/ReadingScreen';
 import VideoPlayerScreen from './screens/VideoPlayerScreen';
 import SessionScreen from './screens/SessionScreen';
+import ChatScreen from './screens/ChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
+          <Stack.Screen name="ChatScreen"   component={ChatScreen} />
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="SessionScreen" component={SessionScreen} />

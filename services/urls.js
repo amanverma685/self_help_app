@@ -11,6 +11,8 @@ export const requestResponseURL = baseURL+"/doctor/dashboard/request-response/";
 
 export const registerUser = baseURL+"/register/user";
 
+export const getInitialSession = baseURL+"/user/get/session/0/week/0";
+
 
 
 // http://hadbackendapiserver-env.eba-gh2r3rm7.ap-south-1.elasticbeanstalk.com/
