@@ -1,88 +1,81 @@
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
 import React, { useState, useEffect } from 'react'
-import {doc, onSnapshot, updateDoc, arrayUnion, serverTimestamp, Timestamp} from 'firebase/firestore'
-import {db} from '../services/FirebaseConfig'
-import 'react-native-get-random-values'
-import {v4 as uuid} from 'uuid'
-import Message from '../components/MessageTextComponent'
-import {IconButton} from 'react-native-paper'
-const ChatScreen = () => {
+import { Bubble, GiftedChat } from 'react-native-gifted-chat'
+import {View} from 'react-native'
+import { arrayUnion, doc, Timestamp, updateDoc, onSnapshot} from 'firebase/firestore';
+import { db } from '../services/FirebaseConfig';
 
-
-  //////////////////////////////////////////////
-  //////////////////////////////////////////////
-  // CHAT ID IS HARD CODED  - 123f8044340-3290-4c44-b2f2-f66f1683838a
-
+export function ChatScreen() {
   const [messages, setMessages] = useState([]);
-  const [text, setText] = useState("");
-  const currentuserId = "123";
+  const userId = "123";
+  const combinedId = "123f8044340-3290-4c44-b2f2-f66f1683838a"; //userid+doctorid = combined id -> used to uniquely identify chats
 
-  console.log(text);
+  useEffect(() => {
 
-  useEffect(()=>{
-    const unsub = onSnapshot(doc(db, "chats", "123f8044340-3290-4c44-b2f2-f66f1683838a"), (doc) => {
-      doc.exists() && setMessages(doc.data());
+    //writing database query
+    // const querySnapshot = query(collection(db, "chats"), where("name", "==", username))
+    
+
+    const unsub = onSnapshot(doc(db, "chats", combinedId), (doc) => {
+        //storing the messages returned
+        const allMessages = doc.data().messages;
+
+        //sorting all messages by timestamp
+        allMessages.sort(function(x, y){
+            return y.createdAt - x.createdAt
+        });
+        doc.exists() && setMessages(
+                            allMessages?.map((msg) => {
+                                return {
+                                    ...msg,
+                                    createdAt: msg.createdAt.toDate() //converting firebase Timestamp t0 Date -> required by gifted chats
+                                }
+                            })
+                        );
+
+        // console.log("documents in messages", messages);
+
+      });
+  
+      return ()=>{
+        unsub();
+      }
+  }, [])
+
+  const onSend = async(messageArray) => {
+    const msg = messageArray[0];
+    const myMsg = {...msg, senderId: userId}
+    setMessages(
+        previousMessages => 
+        GiftedChat.append(previousMessages, myMsg)
+        );
+    //add message to firebase chats collection
+    await updateDoc(doc(db, "chats", combinedId),{
+        messages: arrayUnion({
+            ...myMsg,
+            createdAt: Timestamp.now()
+        })
     });
-
-    return ()=>{
-      unsub();
-    }
-  }, [currentuserId]);
-
-  const handleSend = async() => {
-
-    await updateDoc(doc(db, "chats", '123f8044340-3290-4c44-b2f2-f66f1683838a'), { //need chat id here -> both are hardcoded
-      messages: arrayUnion({
-        id: uuid(),
-        text,
-        senderId: currentuserId,
-        date: Timestamp.now()
-      })
-    });
-    setText(""); //clear text input
-
-    await updateDoc(doc(db, "userChats", `f8044340-3290-4c44-b2f2-f66f1683838a`), { //need doctor id here -> hardcoded
-      ['123f8044340-3290-4c44-b2f2-f66f1683838a' + ".lastMessage"]:{
-        text
-      },
-      [`123f8044340-3290-4c44-b2f2-f66f1683838a`+".date"]: serverTimestamp()
-    });
-  }
-
-  const handleInputChange = (text) => {
-    setText(text);
   };
 
   return (
-    <ScrollView className="mt-10">
-      <ScrollView className='p-3 mx-5'>
-        {
-          messages.messages?.map((msg, index) => {
-            return(
-              <Message message={msg} key={index}/>
-            )
-          })
+    <View style={{flex:1, backgroundColor:'#fff'}}>
+        <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+            _id: userId,
+            name: "user name"
+        }}
+        renderBubble={
+            props => {
+                return <Bubble {...props} wrapperStyle={{right:{
+                    backgroundColor:'grey',
+                }}} />
+            }
         }
-      </ScrollView>
-      <View className="d-flex mx-2" style={{flexDirection:"row"}}>
-        <TextInput
-          className="px-3 border rounded"
-          placeholder='Enter Text'
-          value={text}
-          onChangeText={handleInputChange}
-          style={{
-            width:"90%"
-          }}
         />
-        <IconButton
-          icon={"send"}
-          onPress={handleSend}
-          disabled={!text}
-        />
-      </View>
-    </ScrollView  >
-  );
+    </View>
+  )
 }
 
 export default ChatScreen;

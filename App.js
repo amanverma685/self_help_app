@@ -17,7 +17,6 @@ import ReadingScreen from './screens/ReadingScreen';
 import VideoPlayerScreen from './screens/VideoPlayerScreen';
 import SessionScreen from './screens/SessionScreen';
 import ChatScreen from './screens/ChatScreen';
-import MyChatScreen from './screens/MyChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -53,7 +52,6 @@ const App = () => {
             />
           )}
           {/* adding a temp chat screen for testing chats */}
-          <Stack.Screen name="MyChatScreen" component={MyChatScreen} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
