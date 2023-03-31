@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity,ScrollView,Alert } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
-import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Button from '../components/Button'
 import TextInput from '../components/TextInput'
-import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/EmailValidator'
 import { passwordValidator } from '../helpers/PasswordValidator'
 import { nameValidator } from '../helpers/NameValidator'
 import {registerUser } from '../services/urls';
 import axios from 'axios';
+import BackButton from '../components/BackButton'
 
 
 export default function RegistrationScreen({ navigation }) {
+
   const [fname, setfName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
@@ -86,6 +86,7 @@ export default function RegistrationScreen({ navigation }) {
   return (
     <ScrollView>
       <Background>
+        
       <Header>Create Account</Header>
       <TextInput
         label="First Name "

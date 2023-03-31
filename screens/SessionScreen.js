@@ -3,8 +3,7 @@ import { View, Text, FlatList, TouchableHighlight } from 'react-native';
 import Seperator from '../components/Seperator';
 import SessionList from '../components/SessionList';
 
-const SessionScreen = () => {
-
+const SessionScreen = ({navigation}) => {
   const [activeTab, setActiveTab] = useState(0);
   const [sessionData,setSessionData]=useState([]);
   const [selectedWeekIndex,setSelectedWeekIndex]=useState(0);

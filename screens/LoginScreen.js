@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View,Alert,Keyboard,TouchableWithoutFeedback } from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '../components/Background';
 import Header from '../components/Header';
@@ -12,19 +12,22 @@ import { passwordValidator } from '../helpers/PasswordValidator'
 import { loginURL, loginURL_v2 } from '../services/urls';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Alert from 'react-native-alert-component';
+import { useEffect } from 'react';
 
 export default function LoginScreen({ navigation }) {
+
+  const dummyHandler=()=>{
+  }
   
   const [email, setEmail] = useState({ value: "", error: '' })
   const [password, setPassword] = useState({ value: "", error: '' })
-  const [isVisible, setIsVisible] = useState(false);
   const [error,setError]=useState("");
   const [token, setToken]=useState("");
   const [userData,setUserData]=useState({});
+  const [isDisabled,setIsDisabled]=useState(false);
 
   const handleLogin = async(event) => {
-
+    setIsDisabled(true);
     try {
             const response1 = await axios.post(loginURL, 
               {
@@ -47,9 +50,9 @@ export default function LoginScreen({ navigation }) {
           username:email['value'],
           password:password['value']
           }, config);
-
+          
           if(response2.status===200)
-          { console.log(response2.data)
+          { 
             await AsyncStorage.setItem('id', response2.data.id);
             await AsyncStorage.setItem('firstName',response2.data.firstName);
             await AsyncStorage.setItem('contact',response2.data.contact);
@@ -57,7 +60,8 @@ export default function LoginScreen({ navigation }) {
             await AsyncStorage.setItem('dob',response2.data.dob);        
             await AsyncStorage.setItem('middleName',response2.data.middleName);        
             await AsyncStorage.setItem('lastName',response2.data.lastName);  
-            await AsyncStorage.setItem('token',token);    
+            await AsyncStorage.setItem('token',token); 
+            await AsyncStorage.setItem('isUserLoggedIn','true');
             if(response2.data.sessionDone === -1)    
               await AsyncStorage.setItem('initialSessionCompleted',"No");  
             else       
@@ -67,25 +71,40 @@ export default function LoginScreen({ navigation }) {
               index: 0,
               routes: [{ name: 'LandingScreen' }],
             });
+            setIsDisabled(false);
           }
+          else 
+            {
+              setIsDisabled(false);
+              return (Alert.alert(
+                'Invalid Credentials',
+                'Please try again with correct credentials',
+                [
+                  {
+                    text: 'Try again',
+                    onPress:dummyHandler
+                  }
+                ]
+              ));
+            }
         
-
         } catch (error) {
+          setIsDisabled(false);
           return (Alert.alert(
             'Invalid Credentials',
             'Please try again with correct credentials',
             [
               {
-                text: 'Continue',
-                onPress: {}
+                text: 'Try again',
+                onPress:dummyHandler
               }
             ]
           ));
-
         }
-
     }
+
   const onLoginPressed = async() => {
+    Keyboard.dismiss;
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
@@ -94,12 +113,11 @@ export default function LoginScreen({ navigation }) {
       return
     }
     await handleLogin();
-    const isUserLoggedIn =  AsyncStorage.setItem('isUserLoggedIn','true');
   }
 
+ 
   return (
-    (isVisible===false) ? (<Background>
-      <BackButton goBack={navigation.goBack} />
+    <Background>
       <Header>Welcome back...</Header>
       <TextInput
         label="Email"
@@ -123,33 +141,23 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
       <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ResetPasswordScreen')}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate('ResetPasswordScreen')}>
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button mode="contained" isDisabled={isDisabled}  onPress={onLoginPressed}>
         Login
       </Button>
       <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('RegistrationScreen')}>
+        <Text>Don't have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('RegistrationScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
-    </Background>):
-    (<Alert
-    visible={isVisible}
-    title="Alert Title"
-    message={error}
-    onCancelPressed={setIsVisible(false)}
-    onConfirmPressed={setIsVisible(false)}
-  />)
+    </Background>
 
-  )
+    );
 }
-
 const styles = StyleSheet.create({
   forgotPassword: {
     width: '100%',

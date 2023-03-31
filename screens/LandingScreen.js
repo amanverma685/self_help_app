@@ -46,15 +46,23 @@ const LandingScreen = ({ navigation }) => {
     inactiveBackgroundColor="green"
     >
       <Tab.Screen
-        name="HomeScreen"
+        name="Home"
         component={HomeScreen}
         onPress={reloadScreen} 
-        options={{
+        options={({ navigation }) => ({
           tabBarLabel: 'Home',
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
-        }}
+          screenProps: { navigation },
+        })}
+
+        // options={{
+        //   tabBarLabel: 'Home',
+        //   tabBarIcon: ({color}) => (
+        //     <MaterialCommunityIcons name="home" color={color} size={26} />
+        //   ),
+        // }}
       />
       <Tab.Screen
         name="SessionScreen"
@@ -93,6 +101,7 @@ const LandingScreen = ({ navigation }) => {
         name="Profile"
         component={ProfileScreen}
         onPress={reloadScreen} 
+        
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (

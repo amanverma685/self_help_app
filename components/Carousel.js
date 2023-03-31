@@ -5,22 +5,22 @@ import Carousel from 'react-native-snap-carousel';
 const images = [
   {
     id: 1,
-    url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0j2iyfpMN3kWQgkzOpXu0xrKxkF7STUIZDw&usqp=CAU',
+    url: 'https://cdn.vox-cdn.com/thumbor/gZcTCPlyVAXI7ZYG7GtYwm-zdns=/0x0:2480x1747/1200x800/filters:focal(1063x718:1459x1114)/cdn.vox-cdn.com/uploads/chorus_image/image/70159160/GettyImages_1324376942.0.jpg',
   },
   {
     id: 2,
-    url: 'https://wallpaperset.com/w/full/a/e/5/36131.jpg',
+    url: 'https://cdn.memiah.co.uk/uploads/counselling-directory.org.uk/image_gallery/Mind-1612365176.jpg',
   },
   {
     id: 3,
-    url: 'https://www.pixelstalk.net/wp-content/uploads/images6/Calming-Wallpaper-High-Resolution.jpg',
+    url: 'https://img.freepik.com/premium-vector/support-group-depression-supports-therapy-with-psychotherapist-helping-network-female-problems-tired-woman-need-help-vector-concept_53562-17661.jpg?w=2000',
   },
 ];
 
 const CarouselWithImages = () => {
   const renderItem = ({ item }) => (
-    <View className="mt-4">
-      <View className="w-full h-40">
+    <View className="mt-6">
+      <View className="w-full h-44">
         <Image className="w-full h-full" source={{ uri: item.url }} />
       </View>
     </View>

@@ -12,12 +12,20 @@ import ArticleComponent from '../components/ArticleComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
-
+  
   const [randomJokes,setRandomJokes]=useState([]);
   const [isLoading, setLoading] = useState(true);
   const [articlesList,setArticlesList]=useState([]);
   const [articleLoading,setArticleLoading] = useState(true);
   const [firstName,setFirstName]=useState("");
+  const [suggestionLoading,setSuggestionsLoading]=useState(false);
+  const [suggestedArticle,setSuggestedArticle]=useState([]);
+
+  useEffect(() => {
+    getTenRandomJokes();
+    getArticleList();
+    getSuggestedArticles();
+  }, []);
 
   const getTenRandomJokes = async () => {
     const value = await AsyncStorage.getItem('firstName');
@@ -35,16 +43,10 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const goToProfileScreen=()=>
-  {
-    navigation.navigate('ProfileScreen');
-  }
-
   const getArticleList = async () => {
     setArticleLoading(false);
     try {
       setArticlesList(doctorArticleData);
-      
     } catch (error) {
       console.error(error);
     } finally {
@@ -52,15 +54,28 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  const getSuggestedArticles=async()=>{
+    setSuggestionsLoading(true);
+    try {
+      const response = await fetch('https://official-joke-api.appspot.com/random_ten');
+      const jokes = await response.json();
+      setSuggestedArticle(jokes);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSuggestionsLoading(false);
+    }
+  };
+
+
+  const goToProfileScreen=()=>
+  {
+    navigation.navigate('ProfileScreen');
+  }
+
   const handleRefresh = () => {
     getTenRandomJokes();
   };
-
-  useEffect(() => {
-    getTenRandomJokes();
-    getArticleList();
-  }, []);
-
 
   function handleCheckProgress() {
   }
@@ -126,13 +141,14 @@ const HomeScreen = ({navigation}) => {
             {isLoading ?(<ActivityIndicator size="large" color="#0000ff" />): (<View className=" p-1">
             <FlatList
               data={randomJokes}
-              renderItem={({ item }) => FlipCardComponent(item)}
+              renderItem={({ item ,index}) => FlipCardComponent( item={item}, index ={index} )}
               keyExtractor={item => item.id.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={true}
             />
             </View>
-            )}</>
+            )}
+          </>
       </View>
 
       <>
@@ -143,7 +159,7 @@ const HomeScreen = ({navigation}) => {
           (articlesList.length>0 && (
             <View className="ml-1 mt-2 ">
             <View className="flex-row justify-between	">
-             <Text className="text-xl mt-3 ml-3 mb-2 font-bold">Your Companion's Suggestions</Text>
+             <Text className="text-xl mt-3 ml-3 mb-2 font-bold"> Companion's Suggestions</Text>
             </View>
               <FlatList
                 data={doctorArticleData}
@@ -156,13 +172,14 @@ const HomeScreen = ({navigation}) => {
           ))
           }
       </>
-            
-      
+         { suggestionLoading ?(<ActivityIndicator size="large" color="#0000ff" />):
+         (<View>
+          
+         </View>)}
       </ScrollView>
     </SafeAreaProvider>
-  )
+  );
 }
-
 export default HomeScreen
 
 
