@@ -38,7 +38,7 @@ export function ChatScreen() {
     const doctorId = "f8044340-3290-4c44-b2f2-f66f1683838a"; //userid+doctorid = combined id -> used to uniquely identify chats
     setDoctorId(doctorId);
     
-    
+  
     setChatId(`chat-${doctorId}+${patientId}`);
   }
 
