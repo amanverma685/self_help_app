@@ -26,6 +26,7 @@ export default function RegistrationScreen({ navigation }) {
   const [contact,setContact]=useState({ value: '', error: '' });
 
   const onSignUpPressed = async() => {
+
     const nameError = nameValidator(fname.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
@@ -85,7 +86,6 @@ export default function RegistrationScreen({ navigation }) {
   return (
     <ScrollView>
       <Background>
-      <BackButton goBack={navigation.goBack} />
       <Header>Create Account</Header>
       <TextInput
         label="First Name "

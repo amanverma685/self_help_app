@@ -17,6 +17,7 @@ import ReadingScreen from './screens/ReadingScreen';
 import VideoPlayerScreen from './screens/VideoPlayerScreen';
 import SessionScreen from './screens/SessionScreen';
 import ChatScreen from './screens/ChatScreen';
+import RequestDoctorScreen from './screens/RequestDoctorScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,7 +52,6 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          <Stack.Screen name="ChatScreen"   component={ChatScreen} />
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="SessionScreen" component={SessionScreen} />
@@ -64,6 +64,9 @@ const App = () => {
           <Stack.Screen name="ArticleComponent" component={ArticleComponent} />   
           <Stack.Screen name="VideoPlayerScreen" component={VideoPlayerScreen} />   
           <Stack.Screen name="ReadingScreen" component={ReadingScreen} />   
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="RequestDoctorScreen" component={RequestDoctorScreen} />
+
         </Stack.Navigator>
       </NavigationContainer>
 

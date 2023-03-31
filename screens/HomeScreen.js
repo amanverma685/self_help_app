@@ -23,6 +23,7 @@ const HomeScreen = ({navigation}) => {
     const value = await AsyncStorage.getItem('firstName');
     setFirstName(value);
     setLoading(true);
+    
     try {
       const response = await fetch('https://official-joke-api.appspot.com/random_ten');
       const jokes = await response.json();

@@ -4,8 +4,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MCQQuestion from '../components/QuizComoponentMCQ'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getInitialSession} from '../services/urls';
+import {getInitialSession,postInitialSessionResponse} from '../services/urls';
 import axios from 'axios'
+import RequestDoctorScreen from './RequestDoctorScreen'
 
 const InitialQuizScreen = ({ onPress }) => {
 
@@ -14,7 +15,11 @@ const InitialQuizScreen = ({ onPress }) => {
   const [firstName,setFirstName]=useState()
   const [questions,setQuestions]=useState([]);
   const [isLoading, setLoading] = useState(true);
-
+  const [answers,setAnswers]= useState([]);
+  const [answerOption,setAnswerOption]=useState([]);
+  const [isModelVisible,setIsModelVisible]=useState(false);
+  const [doctorList,setDoctorList]=([]);
+  
   useEffect(() => {
     setFirstNameMethod();
     getInitialQuiz();
@@ -34,7 +39,6 @@ const InitialQuizScreen = ({ onPress }) => {
 
       const response2 = await axios.get(getInitialSession,config);
 
-      console.log(response2.data[0]);
       setQuestions(response2.data);
       setLoading(false);
 
@@ -48,16 +52,61 @@ const InitialQuizScreen = ({ onPress }) => {
     setFirstName(fName);
   }
   
-  const handleSubmit=()=>{
-    AsyncStorage.setItem('initialSessionCompleted',"Yes");
+  const handleSubmit=async()=>{
+    
+    const token = await AsyncStorage.getItem('token');
+    const patientId = await AsyncStorage.getItem('id');
+
+    let config = {
+      headers: {
+          Authorization: token,
+          'ngrok-skip-browser-warning':'true'
+          }
+    };
+
+    const sum = answers.reduce((total, current) => {
+      return total + current;
+    });
+
+    try 
+    {
+      const responseData = await axios.post(postInitialSessionResponse, {
+        patientId:patientId,
+        weekNumber:0,
+        sessionNumber:0,
+        answer_value:answers,
+        answer_options:answerOption
+        }, config);  
+      
+      if(responseData.status===200)
+      await AsyncStorage.setItem('initialSessionCompleted',"Yes");
+
+        if(sum >= 2.5)
+        {
+          setIsModelVisible(true);
+        }
+        else onPress();
+      } catch (error) 
+      {
+        console.log(error);
+      }
+      
+    }
+
+  const handleAnswer = (optionValue,option) => {
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = optionValue;
+    setAnswers(newAnswers);
+
+    const newAnswerOption  = [...answerOption];
+    newAnswerOption[currentQuestion] = option;
+    setAnswerOption(newAnswerOption);
+
+  };
+  const closeModel=()=>{
+    setIsModelVisible(!isModelVisible);
     onPress();
   }
-
-  const handleAnswer = (option) => {
-    const newAnswers = [...answers];
-    newAnswers[currentQuestion] = option;
-    setAnswers(newAnswers);
-  };
 
   const handleNextQuestion = () => {
     if(currentQuestion== questions.length-2)
@@ -65,7 +114,8 @@ const InitialQuizScreen = ({ onPress }) => {
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      console.log(answers); 
+      // console.log(answers); 
+      // console.log(answerOption);
     }
   };
 
@@ -82,8 +132,9 @@ const InitialQuizScreen = ({ onPress }) => {
 
   return (
     
+    (isModelVisible ===false) &&(
     <SafeAreaProvider>
-      <ScrollView className="p-2">
+     <ScrollView className="p-2">
         <View>
             <Text className="text-black font-bold text-xl mb-2 mt-6">
               Hey {firstName}, We have some questions for you
@@ -121,33 +172,13 @@ const InitialQuizScreen = ({ onPress }) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaProvider>
+    </SafeAreaProvider>)
+    ||
+    (isModelVisible===true)&&(
+    <View>
+      <RequestDoctorScreen visible={true} onClose={closeModel}/>
+    </View>)
   )
 }
 
 export default InitialQuizScreen
-
-
-
-
-// const questions = [
-//   {
-//     question: 'What is the capital of France?',
-//     options: ['Paris', 'London', 'Berlin', 'Madrid'],
-//     answer: 'Paris',
-//     imageLocation:'../assets/ballon.png',
-//   },
-//   {
-//     question: 'What is the currency of Japan?',
-//     options: ['Yen', 'Euro', 'Dollar', 'Pound'],
-//     answer: 'Yen',
-//     imageLocation:'../assets/logo.png',
-//   },
-//   {
-//     question: 'What is the largest country in the world by land area?',
-//     options: ['Russian', 'China', 'USA', 'Canada'],
-//     answer: 'Russian',
-//     imageLocation:'../assets/ballon.png',
-//   },
-// ];
-// 
