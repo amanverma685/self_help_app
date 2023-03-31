@@ -13,7 +13,7 @@ export function ChatScreen() {
   const [patientID, setPatientId] = useState('');
   const [patientFirstname, setPatientFirstname] = useState('');
   const [patientLastname, setPatientLastname] = useState('');
-  const [chatId, setChatId] = useState('');
+  var chatId;
   
 
   const initializeDoctorIdPatientId = async() => {
@@ -39,7 +39,7 @@ export function ChatScreen() {
     setDoctorId(doctorId);
     
   
-    setChatId(`chat-${doctorId}+${patientId}`);
+    chatId = `chat-${doctorId}+${patientId}`
   }
 
 
@@ -47,11 +47,11 @@ export function ChatScreen() {
   const checkChatHistory = async() => {
     //passing chatId as chatId and not as `${chatId}` was throwing this error -> 
     // **************** FirebaseError: Invalid document reference. Document references must have an even number of segments, but chats has 1.
-    const res = await getDoc(doc(db, "chats", `${chatId}`));
+    const res = await getDoc(doc(db, "chats", chatId));
     
     if(!res.exists()){
         //create a chat with no messages
-        await setDoc(doc(db, "chats", `${chatId}`),{messages: []});
+        await setDoc(doc(db, "chats", chatId),{messages: []});
 
         // The below is our structure
         // userChats:{
@@ -84,7 +84,7 @@ export function ChatScreen() {
     checkChatHistory();
 
     //getting realtime messages
-    const unsub = onSnapshot(doc(db, "chats", `${chatId}`), (doc) => {
+    const unsub = onSnapshot(doc(db, "chats", chatId), (doc) => {
         //storing the messages returned
         const allMessages = doc.data().messages;
 
@@ -123,7 +123,7 @@ export function ChatScreen() {
         GiftedChat.append(previousMessages, myMsg)
         );
     //add message to firebase chats collection
-    await updateDoc(doc(db, "chats", `${chatId}`),{
+    await updateDoc(doc(db, "chats", chatId),{
         messages: arrayUnion({
             ...myMsg,
             createdAt: Timestamp.now()
