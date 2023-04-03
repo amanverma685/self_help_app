@@ -62,14 +62,20 @@ export default function LoginScreen({ navigation }) {
             await AsyncStorage.setItem('lastName',response2.data.lastName);  
             await AsyncStorage.setItem('token',token); 
             await AsyncStorage.setItem('isUserLoggedIn','true');
+                        
             if(response2.data.sessionDone === -1)    
-              await AsyncStorage.setItem('initialSessionCompleted',"No");  
-            else       
-              await AsyncStorage.setItem('initialSessionCompleted',"Yes");
+              {
+                await AsyncStorage.setItem('initialSessionCompleted',"No"); 
+              } 
+            
+              else       
+              {
+                await AsyncStorage.setItem('initialSessionCompleted',"Yes");
+              }
 
             navigation.reset({
               index: 0,
-              routes: [{ name: 'LandingScreen' }],
+              routes: [{ name: 'LandingScreen',params:{data:response2.data} }],
             });
             setIsDisabled(false);
           }

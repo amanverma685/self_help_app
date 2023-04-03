@@ -81,7 +81,7 @@ const InitialQuizScreen = ({ onPress }) => {
       if(responseData.status===200)
       await AsyncStorage.setItem('initialSessionCompleted',"Yes");
 
-        if(sum >= 2.5)
+        if(sum >=400)
         {
           setIsModelVisible(true);
         }

@@ -11,8 +11,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const LandingScreen = ({ navigation }) => {
+const LandingScreen = ({ route }) => {
   
+  console.log(route);
+  
+  const {userData} = route.params;
+
   const [isIntialSessionCompleted,setInitialSessionCompleted]= useState("");
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -56,13 +60,6 @@ const LandingScreen = ({ navigation }) => {
           ),
           screenProps: { navigation },
         })}
-
-        // options={{
-        //   tabBarLabel: 'Home',
-        //   tabBarIcon: ({color}) => (
-        //     <MaterialCommunityIcons name="home" color={color} size={26} />
-        //   ),
-        // }}
       />
       <Tab.Screen
         name="SessionScreen"

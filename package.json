@@ -27,6 +27,7 @@
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-alert-component": "^1.0.7",
+    "react-native-deck-swiper": "^2.0.13",
     "react-native-elements": "^3.4.3",
     "react-native-flip-card": "^3.5.7",
     "react-native-gesture-handler": "~2.8.0",
