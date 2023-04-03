@@ -7,7 +7,7 @@ export default [
         "title":"ABC",
         "artist": 'deadmau5',
         "duration": 402,
-        "imageURL":"https://babich.biz/content/images/2017/01/schools-promotional-videos.jpg",
+        "imageURL":"https://img.freepik.com/free-vector/video-media-player-interface-mockup-template_1017-23408.jpg",
         "url":"https://dts.podtrac.com/redirect.mp3/chtbl.com/track/8DB4DB/pdst.fm/e/nyt.simplecastaudio.com/bbbcc290-ed3b-44a2-8e5d-5513e38cfe20/episodes/8e9f544c-5da9-4c27-a25d-f13fafcebf61/audio/128/default.mp3"
     },
     {
@@ -24,12 +24,12 @@ export default [
         "doctor_id":"DOC123",
         "patient_id":"PAT123",
         "article_id":"ART216",
-        "article_type":"video",
+        "article_type":"you tube",
         "title":"ABC",
         "artist": 'deadmau5',
         "duration": 402,
-        "imageURL":"https://babich.biz/content/images/2017/01/schools-promotional-videos.jpg",
-        "url":"https://dts.podtrac.com/redirect.mp3/chtbl.com/track/8DB4DB/pdst.fm/e/nyt.simplecastaudio.com/bbbcc290-ed3b-44a2-8e5d-5513e38cfe20/episodes/8e9f544c-5da9-4c27-a25d-f13fafcebf61/audio/128/default.mp3"
+        "imageURL":"https://img.freepik.com/free-vector/video-media-player-interface-mockup-template_1017-23408.jpg",
+        "url":"https://www.youtube.com/watch?v=e1imoH-VZvE"
     },{
         "doctor_id":"DOC123",
         "patient_id":"PAT123",

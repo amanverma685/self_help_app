@@ -4,7 +4,7 @@ import {View} from 'react-native'
 import { arrayUnion, doc, Timestamp, updateDoc, onSnapshot, getDoc, setDoc, serverTimestamp} from 'firebase/firestore';
 import { db } from '../services/FirebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import RequestDoctorScreen from './RequestDoctorScreen';
 
 export function ChatScreen() {
   const [messages, setMessages] = useState([]);
@@ -13,6 +13,7 @@ export function ChatScreen() {
   const [patientID, setPatientId] = useState('');
   const [patientFirstname, setPatientFirstname] = useState('');
   const [patientLastname, setPatientLastname] = useState('');
+  const [doctorAssigned,setDoctorAssigned]= useState(false);
   var chatId;
   
 
@@ -20,22 +21,29 @@ export function ChatScreen() {
 
     //I commented the below code because patient was not loggin in and there was no patient data in there!!!
 
-    // const patientId = await AsyncStorage.getItem('id');
-    // setPatientId(patientId);
+    const doctorId  = await AsyncStorage.getItem('assignedDoctorId');
+    if(doctorId=="")
+    setPatientId(false);
+    else
+    setPatientId(true);
 
-    // const firstname = await AsyncStorage.getItem('firstName');
-    // setPatientFirstname(firstname);
-
-    // const lastname = await AsyncStorage.getItem('lastName');
-    // setPatientLastname(lastname);
-
-    const patientId = "38dbfec8-4a72-48a0-bca0-92f21db6840e";
+    const patientId = await AsyncStorage.getItem('id');
     setPatientId(patientId);
-    setPatientFirstname("Rohit");
-    setPatientLastname("Patnaik");
+
+    const firstname = await AsyncStorage.getItem('firstName');
+    setPatientFirstname(firstname);
+
+    const lastname = await AsyncStorage.getItem('lastName');
+    setPatientLastname(lastname);
+
+    // const patientId = "38dbfec8-4a72-48a0-bca0-92f21db6840e";
+    // setPatientId(patientId);
+    // setPatientFirstname("Rohit");
+    // setPatientLastname("Patnaik");
 
     //to be fetched from async storage in future
-    const doctorId = "f8044340-3290-4c44-b2f2-f66f1683838a"; //userid+doctorid = combined id -> used to uniquely identify chats
+
+    // const doctorId = "f8044340-3290-4c44-b2f2-f66f1683838a"; //userid+doctorid = combined id -> used to uniquely identify chats
     setDoctorId(doctorId);
     
   
@@ -79,7 +87,6 @@ export function ChatScreen() {
 
   useEffect(() => {
 
-    //calling function to initialize my variables
     initializeDoctorIdPatientId();
     checkChatHistory();
 
@@ -132,7 +139,8 @@ export function ChatScreen() {
   };
 
   return (
-    <View style={{flex:1, backgroundColor:'#fff'}}>
+    (doctorAssigned===true) ? (
+      <View style={{flex:1, backgroundColor:'#fff'}}>
         <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
@@ -149,6 +157,11 @@ export function ChatScreen() {
         }
         />
     </View>
+    ):
+    (<View>
+      <RequestDoctorScreen />
+    </View>)
+
   )
 }
 

@@ -28,7 +28,7 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = async(event) => {
     setIsDisabled(true);
-    try {
+    try {   
             const response1 = await axios.post(loginURL, 
               {
                 username: email['value'],
@@ -38,14 +38,14 @@ export default function LoginScreen({ navigation }) {
             });
           
           const token = response1.headers['authorization'];
-          
+        
           let config = {
             headers: {
                 Authorization: token,
                 'ngrok-skip-browser-warning':'true'
                 }
         };
-
+        
         const response2 = await axios.post(loginURL_v2, {
           username:email['value'],
           password:password['value']
@@ -62,7 +62,14 @@ export default function LoginScreen({ navigation }) {
             await AsyncStorage.setItem('lastName',response2.data.lastName);  
             await AsyncStorage.setItem('token',token); 
             await AsyncStorage.setItem('isUserLoggedIn','true');
-                        
+            // if(response2.data.doctor===null)
+            // {
+            //   await AsyncStorage.setItem('assignedDoctorId',""); 
+            // }
+            // else {
+            //   await AsyncStorage.setItem('assignedDoctorId',response2.data.id); 
+            // }
+
             if(response2.data.sessionDone === -1)    
               {
                 await AsyncStorage.setItem('initialSessionCompleted',"No"); 
@@ -72,7 +79,7 @@ export default function LoginScreen({ navigation }) {
               {
                 await AsyncStorage.setItem('initialSessionCompleted',"Yes");
               }
-
+              
             navigation.reset({
               index: 0,
               routes: [{ name: 'LandingScreen',params:{data:response2.data} }],
@@ -96,6 +103,7 @@ export default function LoginScreen({ navigation }) {
         
         } catch (error) {
           setIsDisabled(false);
+          console.log(error);
           return (Alert.alert(
             'Invalid Credentials',
             'Please try again with correct credentials',

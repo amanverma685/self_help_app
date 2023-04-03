@@ -3,15 +3,13 @@ import React, { useState,useEffect } from 'react'
 import { WebView } from 'react-native-webview';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-const ReadingScreen = ({route}) => {
+const YouTubeScreen = ({route}) => {
 
   const navigation = route.params.navigation;
-  const [readingArticle,setReadingArticle] = useState({});
-  const [readingURL,setReadingURL] = useState("");
+  const [youTubeURL,setYouTubeURL] = useState("");
 
     useEffect(() => {
-      setReadingArticle(route.params.item.item);      
-      setReadingURL(route.params.item.item.url);
+      setYouTubeURL(route.params.item.item.url);
     }, [])
     
 
@@ -32,7 +30,7 @@ const ReadingScreen = ({route}) => {
         />
       )}
       <WebView
-        source={{ uri: readingURL}}
+        source={{ uri: youTubeURL}}
         onLoad={handleLoad}
       />
     </View>
@@ -40,7 +38,7 @@ const ReadingScreen = ({route}) => {
   );
 }
 
-export default ReadingScreen
+export default YouTubeScreen
 
 const styles = StyleSheet.create({
   container: {

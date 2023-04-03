@@ -11,7 +11,6 @@ import doctorArticleData from '../dummy_data/doctors_article'
 import ArticleComponent from '../components/ArticleComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Card } from 'react-native-paper';
-import CardComponent from '../components/CardComponent';
 import PredefinedArticles from '../components/PredefinedArticles';
 
 const HomeScreen = ({navigation}) => {
@@ -166,7 +165,7 @@ const HomeScreen = ({navigation}) => {
           }
       </>
       
-      <View className="h-96 w-full bg-white rounded-3xl mt-4">
+      {/* <View className="h-96 w-full bg-white rounded-3xl mt-4">
       <Card>
         <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
           <Card.Content>
@@ -179,7 +178,7 @@ const HomeScreen = ({navigation}) => {
           <Button>Ok</Button>
         </Card.Actions>
       </Card>
-      </View>
+      </View> */}
       </ScrollView>
     
   );

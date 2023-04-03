@@ -20,6 +20,7 @@ import ChatScreen from './screens/ChatScreen';
 import RequestDoctorScreen from './screens/RequestDoctorScreen';
 import PredefinedArticleScreen from './screens/PredefinedArticleScreen';
 import RenderSubarticleScreen from './screens/RenderSubarticleScreen';
+import YouTubeScreen from './screens/YouTubeScreen';
 
 const Stack = createStackNavigator();
 
@@ -54,9 +55,9 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="SessionScreen" component={SessionScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
@@ -70,6 +71,8 @@ const App = () => {
           <Stack.Screen name="RequestDoctorScreen" component={RequestDoctorScreen} />
           <Stack.Screen name="PredefinedArticleScreen" component={PredefinedArticleScreen} />
           <Stack.Screen name="RenderSubarticleScreen" component={RenderSubarticleScreen } />
+          <Stack.Screen name="YouTubeScreen" component={YouTubeScreen} />
+          
         </Stack.Navigator>
       </NavigationContainer>
 

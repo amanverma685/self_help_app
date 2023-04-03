@@ -9,7 +9,8 @@ import {
   FlatList,
   Modal,
   TouchableOpacity,
-  Image,Alert,
+  Image,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getListOfDocs,requestDoc } from '../services/urls';
