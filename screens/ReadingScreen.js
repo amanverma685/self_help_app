@@ -11,10 +11,9 @@ const ReadingScreen = ({route}) => {
 
     useEffect(() => {
       setReadingArticle(route.params.item.item);      
-      setReadingURL(route.params.item.item.url);
+      setReadingURL(route.params.item.item.articleUrl);
     }, [])
     
-
     const [isLoading, setIsLoading] = useState(true);
 
   const handleLoad = () => {

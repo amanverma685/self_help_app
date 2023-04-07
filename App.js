@@ -21,6 +21,8 @@ import RequestDoctorScreen from './screens/RequestDoctorScreen';
 import PredefinedArticleScreen from './screens/PredefinedArticleScreen';
 import RenderSubarticleScreen from './screens/RenderSubarticleScreen';
 import YouTubeScreen from './screens/YouTubeScreen';
+import MoodLiftScreen from './screens/MoodLiftScreen';
+import PodcastSeriesScreen from './screens/PodcastSeriesScreen';
 
 const Stack = createStackNavigator();
 
@@ -55,15 +57,17 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          <Stack.Screen name="LoginScreen"   component={LoginScreen} />
+          
+          <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
+          <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="SessionScreen" component={SessionScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />          
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-          <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
           <Stack.Screen name="ArticleComponent" component={ArticleComponent} />   
           <Stack.Screen name="VideoPlayerScreen" component={VideoPlayerScreen} />   
           <Stack.Screen name="ReadingScreen" component={ReadingScreen} />   
@@ -72,6 +76,7 @@ const App = () => {
           <Stack.Screen name="PredefinedArticleScreen" component={PredefinedArticleScreen} />
           <Stack.Screen name="RenderSubarticleScreen" component={RenderSubarticleScreen } />
           <Stack.Screen name="YouTubeScreen" component={YouTubeScreen} />
+          <Stack.Screen name="PodcastSeriesScreen" component={PodcastSeriesScreen} />
           
         </Stack.Navigator>
       </NavigationContainer>

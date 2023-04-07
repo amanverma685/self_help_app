@@ -9,7 +9,7 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/EmailValidator'
 import { passwordValidator } from '../helpers/PasswordValidator'
 import { nameValidator } from '../helpers/NameValidator'
-import {registerUser } from '../services/urls';
+import {registerUser } from '../services/URLs';
 import axios from 'axios';
 import BackButton from '../components/BackButton'
 
@@ -86,8 +86,9 @@ export default function RegistrationScreen({ navigation }) {
   return (
     <ScrollView>
       <Background>
-        
-      <Header>Create Account</Header>
+      <View>
+        <Text className="text-2xl font-bold mt-10">Create Account</Text>
+      </View>
       <TextInput
         label="First Name "
         returnKeyType="next"
@@ -132,7 +133,8 @@ export default function RegistrationScreen({ navigation }) {
         error={!!gender.error}
         errorText={gender.error}
       />
-      <TextInput
+
+      <TextInput  
         label="Date of Birth"
         returnKeyType="next"
         value={dateOfBirth.value}
@@ -140,6 +142,7 @@ export default function RegistrationScreen({ navigation }) {
         error={!!dateOfBirth.error}
         errorText={dateOfBirth.error}
       />
+
       <TextInput
         label="Contact"
         returnKeyType="next"
@@ -148,6 +151,7 @@ export default function RegistrationScreen({ navigation }) {
         error={!!contact.error}
         errorText={contact.error}
       />
+
       <TextInput
         label="Password"
         returnKeyType="done"

@@ -1,6 +1,7 @@
-const baseURL = "https://e1f2-119-161-98-68.in.ngrok.io";
+const baseURL = "https://618a-2a09-bac5-3b4c-7eb-00-ca-4c.in.ngrok.io";
 
 export const loginURL = baseURL+"/login";
+
 export const loginURL_v2 = baseURL+"/login-timestamp";
 
 export const allPatientsURL = baseURL+"/doctor/dashboard/get-reg-patients/";
@@ -17,5 +18,6 @@ export const postInitialSessionResponse = baseURL+"/user/post/question-answers";
 
 export const requestDoc = baseURL+"/user/request-doctor/";
 
-export const getListOfDocs = baseURL+"/get/doctors"
+export const getListOfDocs = baseURL+"/get/doctors";
 
+export const getDoctorSuggestedArticle = baseURL+"/get/self-article/";

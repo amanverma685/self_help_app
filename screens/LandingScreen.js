@@ -13,7 +13,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 const LandingScreen = ({ route }) => {
     
-  const {userData} = route.params;
+  // const {userData} = route.params;
 
   const [isIntialSessionCompleted,setInitialSessionCompleted]= useState("");
   const [refreshKey, setRefreshKey] = useState(0);

@@ -13,7 +13,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getListOfDocs,requestDoc } from '../services/urls';
+import { getListOfDocs,requestDoc } from '../services/URLs';
 
 
 const RequestDoctorScreen = ({ visible, onClose }) => {
@@ -75,7 +75,7 @@ const RequestDoctorScreen = ({ visible, onClose }) => {
     }
 
   const renderDoctorCard = ({ item }) => (
-    <View  className="mb-3 bg-red-300" style={styles.doctorCard}>
+    <View  className="mb-3 bg-blue-300" style={styles.doctorCard}>
         <Avatar.Image
             className = {20}
             size={50}

@@ -7,12 +7,12 @@ import SearchBar from '../components/SearchBar';
 import Carousel from '../components/Carousel';
 import { MD3Colors } from 'react-native-paper';
 import FlipCardComponent from '../components/FlipCard';
-import doctorArticleData from '../dummy_data/doctors_article'
+// import doctorArticleData from '../dummy_data/doctors_article'
 import ArticleComponent from '../components/ArticleComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Card } from 'react-native-paper';
 import PredefinedArticles from '../components/PredefinedArticles';
-
+import { getDoctorSuggestedArticle } from '../services/URLs';
+import axios from 'axios';
 const HomeScreen = ({navigation}) => {
   
   const [randomJokes,setRandomJokes]=useState([]);
@@ -22,7 +22,8 @@ const HomeScreen = ({navigation}) => {
   const [firstName,setFirstName]=useState("");
   const [suggestionLoading,setSuggestionsLoading]=useState(false);
   const [suggestedArticle,setSuggestedArticle]=useState([]);
-  
+  const [userId,setUserId]=useState("");
+
   useEffect(() => {
     getTenRandomJokes();
     getArticleList();
@@ -46,18 +47,33 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const getArticleList = async () => {
-    setArticleLoading(false);
-    try {
-      setArticlesList(doctorArticleData);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setArticleLoading(false);
-    }
-  };
 
-  const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
+  const getArticleList = async() => {
+
+    setArticleLoading(true);
+    const id = await AsyncStorage.getItem('id');
+    setUserId(id);
+
+    const token = await AsyncStorage.getItem('token');
+    const getURL= getDoctorSuggestedArticle+userId;
+
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+    await axios.get(getURL,config)
+      .then((res) => {
+        setArticlesList(res.data);
+        setArticleLoading(false);
+    })
+      .catch(err => {
+        setArticleLoading(false);
+        console.log(err)});
+    };
+
+  // const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
   const goToScreen=(screenName)=>
   {
@@ -84,7 +100,6 @@ const HomeScreen = ({navigation}) => {
                   <TouchableOpacity onPress={()=>{goToScreen('ProfileScreen')}}>
                     <View className="mr-3">
                       <Avatar.Image
-                            className = {20}
                             size={50}
                             source={{
                                 uri: `http://www.goodmorningimagesdownload.com/wp-content/uploads/2019/10/Happy-Whatsapp-DP-Profile-Images-4.jpg`,
@@ -145,7 +160,6 @@ const HomeScreen = ({navigation}) => {
       </View>
       <>
       {
-        // TODO Something
         articleLoading ? (<ActivityIndicator size="large" color="#0000ff" />):
 
           (articlesList.length>0 && (
@@ -154,9 +168,9 @@ const HomeScreen = ({navigation}) => {
              <Text className="text-xl mt-3 ml-3 mb-2 font-bold"> Companion's Suggestions</Text>
             </View>
               <FlatList
-                data={doctorArticleData}
-                renderItem={({ item }) => <ArticleComponent item={item} navigation={navigation} />}
-                keyExtractor={item => item.article_id.toString()}
+                data={articlesList}
+                renderItem={({ item }) => <ArticleComponent item={{item:item,navigation:navigation}} />}
+                keyExtractor={item => item.id.toString()}
                 horizontal={true}
                 showsHorizontalScrollIndicator={true}
               />

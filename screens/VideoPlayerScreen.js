@@ -2,7 +2,8 @@ import * as React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 
-export default function VideoPlayerScreen () {
+export default function VideoPlayerScreen (item) {
+  console.log(item)
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   return (

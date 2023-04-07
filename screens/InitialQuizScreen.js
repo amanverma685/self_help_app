@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MCQQuestion from '../components/QuizComoponentMCQ'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getInitialSession,postInitialSessionResponse} from '../services/urls';
+import {getInitialSession,postInitialSessionResponse} from '../services/URLs';
 import axios from 'axios'
 import RequestDoctorScreen from './RequestDoctorScreen'
 

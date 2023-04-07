@@ -9,7 +9,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator } from '../helpers/EmailValidator';
 import { passwordValidator } from '../helpers/PasswordValidator'
-import { loginURL, loginURL_v2 } from '../services/urls';
+import { loginURL, loginURL_v2 } from '../services/URLs';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';

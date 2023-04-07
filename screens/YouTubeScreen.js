@@ -9,9 +9,8 @@ const YouTubeScreen = ({route}) => {
   const [youTubeURL,setYouTubeURL] = useState("");
 
     useEffect(() => {
-      setYouTubeURL(route.params.item.item.url);
+      setYouTubeURL(route.params.item.item.articleUrl);
     }, [])
-    
 
     const [isLoading, setIsLoading] = useState(true);
 

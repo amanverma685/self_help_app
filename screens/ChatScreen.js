@@ -15,14 +15,13 @@ export function ChatScreen() {
   const [patientLastname, setPatientLastname] = useState('');
   const [doctorAssigned,setDoctorAssigned]= useState(false);
   var chatId;
-  
 
   const initializeDoctorIdPatientId = async() => {
 
     //I commented the below code because patient was not loggin in and there was no patient data in there!!!
 
     const doctorId  = await AsyncStorage.getItem('assignedDoctorId');
-    if(doctorId=="")
+    if(doctorId==null)
     setPatientId(false);
     else
     setPatientId(true);
