@@ -2,52 +2,51 @@ import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { Card, Button } from 'react-native-paper';
-const PodcastSeriesScreen = ({route}) => {
+import { Card, Button, IconButton } from 'react-native-paper';
+import { useState } from 'react';
+import { Avatar } from 'react-native-paper';
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-    const handlePress = id => {
-        console.log(`Play button pressed for item with ID ${id}`);
+const PodcastSeriesScreen = ({route}) => {
+    const navigation = useNavigation();
+    const [podcastSeries,setPodcastSeries]=useState([]);
+    const [podcastArtist,setPodcastArtist]=useState("");
+    const [podcastThumbnail,setPodcastThumbnail]=useState("");
+    useEffect(() => {
+      setPodcastSeries(route.params.data.podcastEpisodes);
+      setPodcastArtist(route.params.data.artist);
+      setPodcastThumbnail(route.params.data.podcastThumbnail);
+    }, [])
+    
+    const handlePress = (item) => {
+      const navigationData={"artist":podcastArtist, "podcastDescription": item.episodeDescription, "podcastTitle":item.episodeTitle, "podcastURL":  item.episodeURL, "podcast_id": item.episodeNumber, "thumbnail": podcastThumbnail}
+      navigation.navigate('AudioPlayerScreen',{data:navigationData});
       };
 
-    const items = [
-        {
-          id: 1,
-          name: 'John Doe',
-          title: 'Item 1',
-          avatar: 'https://picsum.photos/id/237/200/300',
-        },
-        {
-          id: 2,
-          name: 'Jane Doe',
-          title: 'Item 2',
-          avatar: 'https://picsum.photos/id/238/200/300',
-        },
-        {
-          id: 3,
-          name: 'Bob Smith',
-          title: 'Item 3',
-          avatar: 'https://picsum.photos/id/239/200/300',
-        },
-      ];
-    
   return (
     <SafeAreaProvider>
     <ScrollView>
-     <View className="bg-cyan-500 pl-3 rounded-2xl">
+     <View className="bg-teal-500 pl-3 rounded-2xl">
        <View className="pt-6 mt-16 ">
-          <Text className="text-2xl font-bold mb-2 text-center"> Podcast Title </Text>
+          <Text className="text-2xl font-bold mb-2 text-center">{route.params.data.podcastTitle}</Text>
        </View>
      </View>
      <View style={styles.container}>
-      {items.map(item => (
-        <Card key={item.id} style={styles.card}>
+      {podcastSeries.map(item => (
+        <Card key={item.episodeNumber} style={styles.card}>
           <Card.Content style={styles.cardContent}>
-            <Image style={styles.avatar} source={{ uri: item.avatar }} />
-            <View style={styles.details}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.title}>{item.title}</Text>
+            <View className="flex-col">
+            <Avatar.Text color='black' className="bg-teal-500" size={42} label={item.episodeNumber} />
             </View>
-            <Button onPress={() => handlePress(item.id)}>Play</Button>
+            <View style={styles.details}>
+              <Text style={styles.name}>{item.episodeTitle}</Text>
+              <Text numberOfLines={3} style={styles.title}>{item.episodeDescription}</Text>
+            </View>
+           <View className="flex-col">
+           <Avatar.Icon icon={item.isCompleted===true ? 'check-all':'timer-sand-complete'} color='white'size={42} className="mt-2 ml-2 bg-black" />
+            <IconButton icon='play' className="bg-teal-500" size={32} onPress={() => handlePress(item)} />
+           </View>
           </Card.Content>
         </Card>
       ))}
@@ -62,7 +61,7 @@ export default PodcastSeriesScreen ;
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#F5F5F5',
+      backgroundColor: '#F1e5F5',
       padding: 4,
     },
     card: {

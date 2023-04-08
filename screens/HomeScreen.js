@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PredefinedArticles from '../components/PredefinedArticles';
 import { getDoctorSuggestedArticle } from '../services/URLs';
 import axios from 'axios';
+
 const HomeScreen = ({navigation}) => {
   
   const [randomJokes,setRandomJokes]=useState([]);

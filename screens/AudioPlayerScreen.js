@@ -1,9 +1,10 @@
 import { View, Text,Button,StyleSheet } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import { Audio } from 'expo-av';
-import { Avatar, IconButton, ProgressBar } from 'react-native-paper';
+import { Avatar, Divider, IconButton, ProgressBar } from 'react-native-paper';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import { ScrollView } from 'react-native-gesture-handler';
+import Seperator from '../components/Seperator';
 
 const AudioPlayerScreen = ({route}) => {
 
@@ -16,7 +17,7 @@ const AudioPlayerScreen = ({route}) => {
 
   useEffect(() => {
     setPodcastData(route.params.data);
-    setArtistThumbnail(podcastData.thumbnail);    
+    setArtistThumbnail(route.params.data.thumbnail);    
   }, [])
   
   const handlePlayPause = async () => {
@@ -101,13 +102,13 @@ const AudioPlayerScreen = ({route}) => {
          />
       </View>
       <View>
-        <Text className="text-2xl mt-10 text-center font-bold">
+        <Text className="text-2xl mt-6 text-center font-bold">
           {podcastData.podcastTitle}
         </Text>
       </View>
       <View className="mt-6 justify-center">
         <Text className="text-2xl text-center font-bold">
-          {podcastData.artist}
+         <Text>Author - </Text>{podcastData.artist}
         </Text>
       </View>
     <View className="justify-center ml-32 justify-items-center">
@@ -120,7 +121,9 @@ const AudioPlayerScreen = ({route}) => {
    
     </View>
     <View>
-      <Text  className="text-lg m-2" >
+      <Text className="text-3xl text-center font-bold mt-3">Podcast Description</Text>
+      <Seperator/>
+      <Text  className="text-xl m-2 text-black" >
         {podcastData.podcastDescription}
       </Text>
     </View>

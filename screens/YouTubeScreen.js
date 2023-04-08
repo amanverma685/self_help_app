@@ -4,8 +4,6 @@ import { WebView } from 'react-native-webview';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const YouTubeScreen = ({route}) => {
-
-  const navigation = route.params.navigation;
   const [youTubeURL,setYouTubeURL] = useState("");
 
     useEffect(() => {

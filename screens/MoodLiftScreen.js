@@ -1,23 +1,24 @@
-import React from 'react'
-import { View, Text, ImageBackground,Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, ImageBackground,Image,StyleSheet,ActivityIndicator } from 'react-native'
 import { Avatar } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import podcastdata from '../dummy_data/podcasts_by_artists';
 import PDFReaderScreen from './PDFReaderScreen';
+import youTubePlaylist from '../dummy_data/youTubePlaylist';
+import podcast_series from '../dummy_data/podcast_series';
 
 const MoodLiftScreen = ({navigation}) => {
-  
+
   const PodcastArtistThumbnail = ({item}) => {
-  
     return (
       <TouchableOpacity onPress={()=>{navigation.navigate('AudioPlayerScreen',{data:item})}}>
-        <View className="h-40 w-32 rounded-xl bg-orange-200 m-3">
-          <View className="justify-center m-3">
-          <Avatar.Image size={100}  source={{ uri: item.thumbnail }} className="justify-center" />
+        <View className="h-33 w-32 rounded-xl  m-2">
+          <View className="justify-center">
+          <Avatar.Image size={100}  source={{ uri: item.thumbnail }} className="justify-center ml-3" />
           </View>
-          <View className=" justify-items-center ">
+          <View>
             <Text className="text-lg text-black text-center">{item.artist}</Text>
           </View>
         </View>
@@ -25,22 +26,41 @@ const MoodLiftScreen = ({navigation}) => {
     )
   }
 
+
   const renderPodcastSeries = ({item}) => {
-  
     return (
       <TouchableOpacity onPress={()=>{navigation.navigate('PodcastSeriesScreen',{data:item})}}>
-        <View className="h-40 w-52 rounded-xl bg-sky-200 shadow-black shadow-sm m-3">
+        <View className="h-56 w-52 rounded-xl mt-2">
           <View className="justify-center">
-          <Image source={{ uri:'https://i.pinimg.com/564x/a8/c7/81/a8c781b8d81cb55bbc0faf9fa2aca055.jpg' }} className=" justify-center top-1 left-5 justify-items-center h-32 w-40 rounded-xl" />
+          <Image source={{ uri:item.podcastThumbnail }} className=" justify-center top-1 left-6 justify-items-center h-40 w-40 rounded-xl" />
           </View>
-          <Image source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghTRcGozvp_H92lqdbOE3mHjShUeE8UI5Gc9zVy6CsTSzGeYckMLBQ3CGvQwa4faWz6c&usqp=CAU' }} className=" absolute justify-center right-6 bottom-3 justify-items-center h-12 w-12 rounded-xl" />  
+          {/* <Image source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghTRcGozvp_H92lqdbOE3mHjShUeE8UI5Gc9zVy6CsTSzGeYckMLBQ3CGvQwa4faWz6c&usqp=CAU' }} className=" absolute justify-center right-6 top-2 justify-items-center h-12 w-12 rounded-xl" />   */}
           <View className=" justify-items-center">
-            <Text className="text-center text-lg text-black ">Podcast Title</Text>
+            <Text className="text-center text-lg text-black mt-2 ">{item.podcastTitle}</Text>
           </View>
         </View>
       </TouchableOpacity>
     )
   }
+
+
+  const renderYouTubeSeries = ({item}) => {
+    return (
+      <TouchableOpacity onPress={()=>{navigation.navigate('YouTubeScreen',{item:{item:{articleUrl:item.playlistURL}}})}}>
+        <View className="h-56 w-52 rounded-xl mt-2">
+          <View className="justify-center">
+          <Image source={{ uri:item.thumbnail }} className=" justify-center top-1 left-6 justify-items-center h-40 w-40 rounded-xl" />
+          </View>
+          {/* <Image source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghTRcGozvp_H92lqdbOE3mHjShUeE8UI5Gc9zVy6CsTSzGeYckMLBQ3CGvQwa4faWz6c&usqp=CAU' }} className=" absolute justify-center right-6 top-2 justify-items-center h-12 w-12 rounded-xl" />   */}
+          <View className=" justify-items-center">
+            <Text className="text-center text-lg text-black mt-2 ">{item.title}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  
 
   return (
     <SafeAreaProvider>
@@ -65,12 +85,12 @@ const MoodLiftScreen = ({navigation}) => {
         </View>
 
         <View>
-          <Text className="text-2xl font-bold mt-4 ml-2"> Popular Podcast Series  </Text>
+          <Text className="text-2xl font-bold ml-2"> Popular Podcast Series  </Text>
           <View>
           <FlatList
-              data={podcastdata}
-              renderItem={({ item ,index}) => renderPodcastSeries( item={item})}
-              keyExtractor={item => item.podcast_id.toString()}
+              data={podcast_series}
+              renderItem={({ item}) => renderPodcastSeries( item={item})}
+              keyExtractor={item => item.podcastId.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
@@ -81,9 +101,9 @@ const MoodLiftScreen = ({navigation}) => {
           <Text className="text-2xl font-bold mt-4 ml-2"> You Tube channels for self development </Text>
           <View>
           <FlatList
-              data={podcastdata}
-              renderItem={({ item ,index}) =>renderPodcastSeries(item={item}) }
-              keyExtractor={item => item.podcast_id.toString()}
+              data={youTubePlaylist}
+              renderItem={({ item}) => renderYouTubeSeries(item={item})}
+              keyExtractor={item => item.playlistId.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
@@ -94,9 +114,9 @@ const MoodLiftScreen = ({navigation}) => {
           <Text className="text-2xl font-bold mt-4 ml-2"> Book Links for Self Improvements  </Text>
           <View>
           <FlatList
-              data={podcastdata}
-              renderItem={({ item ,index}) => PDFReaderScreen( item={item})}
-              keyExtractor={item => item.podcast_id.toString()}
+              data={podcast_series}
+              renderItem={({ item ,index}) => renderPodcastSeries( item={item})}
+              keyExtractor={item => item.podcastId.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
@@ -108,4 +128,5 @@ const MoodLiftScreen = ({navigation}) => {
   )
 }
 
-export default MoodLiftScreen
+export default MoodLiftScreen;
+
