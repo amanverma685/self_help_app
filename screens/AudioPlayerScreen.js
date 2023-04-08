@@ -64,7 +64,7 @@ const AudioPlayerScreen = ({route}) => {
     
     const newSoundObject = new Audio.Sound();
     try {  
-      await newSoundObject.loadAsync(require('../assets/hello.mp3'));
+      await newSoundObject.loadAsync({uri:podcastData.podcastURL});
       await newSoundObject.playAsync();
       setSoundObject(newSoundObject);
       newSoundObject.setOnPlaybackStatusUpdate(onPlaybackStatusUpdate);

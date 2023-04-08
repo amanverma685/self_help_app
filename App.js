@@ -57,7 +57,7 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          
+
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="HomeScreen" component={HomeScreen} />

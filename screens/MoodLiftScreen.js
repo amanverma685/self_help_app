@@ -5,6 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import podcastdata from '../dummy_data/podcasts_by_artists';
+import PDFReaderScreen from './PDFReaderScreen';
 
 const MoodLiftScreen = ({navigation}) => {
   
@@ -94,7 +95,7 @@ const MoodLiftScreen = ({navigation}) => {
           <View>
           <FlatList
               data={podcastdata}
-              renderItem={({ item ,index}) => PodcastArtistThumbnail( item={item})}
+              renderItem={({ item ,index}) => PDFReaderScreen( item={item})}
               keyExtractor={item => item.podcast_id.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}

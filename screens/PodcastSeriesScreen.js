@@ -51,6 +51,7 @@ const PodcastSeriesScreen = ({route}) => {
           </Card.Content>
         </Card>
       ))}
+      
     </View>
     </ScrollView>
     </SafeAreaProvider>
