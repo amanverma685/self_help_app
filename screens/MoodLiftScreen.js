@@ -51,7 +51,6 @@ const MoodLiftScreen = ({navigation}) => {
           <View className="justify-center">
           <Image source={{ uri:item.thumbnail }} className=" justify-center top-1 left-6 justify-items-center h-40 w-40 rounded-xl" />
           </View>
-          {/* <Image source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghTRcGozvp_H92lqdbOE3mHjShUeE8UI5Gc9zVy6CsTSzGeYckMLBQ3CGvQwa4faWz6c&usqp=CAU' }} className=" absolute justify-center right-6 top-2 justify-items-center h-12 w-12 rounded-xl" />   */}
           <View className=" justify-items-center">
             <Text className="text-center text-lg text-black mt-2 ">{item.title}</Text>
           </View>
@@ -109,20 +108,6 @@ const MoodLiftScreen = ({navigation}) => {
           />
           </View>
         </View>
-
-        <View>
-          <Text className="text-2xl font-bold mt-4 ml-2"> Book Links for Self Improvements  </Text>
-          <View>
-          <FlatList
-              data={podcast_series}
-              renderItem={({ item ,index}) => renderPodcastSeries( item={item})}
-              keyExtractor={item => item.podcastId.toString()}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-          />
-          </View>
-        </View>
-
       </ScrollView>
     </SafeAreaProvider>
   )
