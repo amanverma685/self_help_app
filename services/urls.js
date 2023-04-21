@@ -1,4 +1,4 @@
-const baseURL = "https://81d0-2a09-bac5-3b4b-15f-00-23-2e5.ngrok-free.app";
+const baseURL = "https://227f-2a09-bac5-3b4b-18c8-00-278-91.ngrok-free.app";
 
 export const loginURL = baseURL+"/login";
 
@@ -26,3 +26,6 @@ export const getPodcastDataURL = baseURL+"/user/get-all-podcast"
 
 // export const getPodcastDataByArtistURL = baseURL+"/user/get-podcast-by-artist/"
 
+export const getUserProfile = baseURL + "/user/get/profile/"
+
+export const getWeekSession =  baseURL+"/user/get/session/";
