@@ -92,7 +92,7 @@ const AudioPlayerScreen = ({route}) => {
          radius ={180}
          value={progress*100}
          textColor={'blue'}
-         fontSize={20}
+         fontSize={15}
          activeStrokeColor={'white'}
          inActiveStrokeColor={'blue'}
          inActiveStrokeOpacity={0.4}

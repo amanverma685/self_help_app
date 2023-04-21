@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity,ScrollView,Alert } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
-import Header from '../components/Header'
 import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 import { theme } from '../core/theme'
@@ -11,7 +10,6 @@ import { passwordValidator } from '../helpers/PasswordValidator'
 import { nameValidator } from '../helpers/NameValidator'
 import {registerUser } from '../services/URLs';
 import axios from 'axios';
-import BackButton from '../components/BackButton'
 
 
 export default function RegistrationScreen({ navigation }) {

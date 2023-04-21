@@ -103,7 +103,7 @@ const MoodLiftScreen = ({navigation}) => {
 
         <View>
           <Text className="text-2xl font-bold mt-4 ml-2"> Suggested Artists </Text>
-          <View>
+          {isLoading ?(<ActivityIndicator size="large" color="#0000ff" />):(<View>
           <FlatList
               data={podcastSeries}
               renderItem={({ item }) => PodcastArtistThumbnail( item={item})}
@@ -111,7 +111,7 @@ const MoodLiftScreen = ({navigation}) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
-          </View>
+          </View>)}
         </View>
 
         <View>

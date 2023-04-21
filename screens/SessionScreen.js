@@ -1,28 +1,65 @@
 import React, { useState,useEffect} from 'react';
 import { View, Text, FlatList,Image, TouchableHighlight } from 'react-native';
 import Seperator from '../components/Seperator';
-import SessionList from '../components/SessionList';
-
+import { getUserProfile } from '../services/URLs';
+// import SessionList from '../components/SessionList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getWeekSession } from '../services/URLs';
+import axios from 'axios';
 const SessionScreen = ({navigation}) => {
   
   const [activeTab, setActiveTab] = useState(0);
   const [sessionData,setSessionData]=useState([]);
   const [selectedWeekIndex,setSelectedWeekIndex]=useState(0);
-
+  const [currentSession,setCurrentSession]= useState(0);
+  const [currentWeek,setCurrentWeek]=useState(0);
   useEffect(() => {
-    getSessionData(0)
-  },[])
+    getUserProfileData();
+  }, [])
 
-  const getSessionData = (index) => {
-    setSelectedWeekIndex(index);
-    setSessionData([]);
-    setSessionData(allSessionData[index+1]);
-    console.log("Insise SessionScreen"+sessionData);
-    console.log(sessionData);
+  const getUserProfileData=async()=>{
+    const id = await AsyncStorage.getItem('id');
+    const token = await AsyncStorage.getItem('token');
+    const userProfileURL = getUserProfile+id;
 
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+  await axios.get(userProfileURL,config)
+      .then((res) => {
+        console.log(res.data);
+        setCurrentWeek(res.data.weekDone+1);
+        setCurrentSession(res.data.sessionDone+1)
+    })
+      .catch(err => {
+        console.log(err)});
+    };
+  
+
+  const getSessionData = async(index) => {
+    const token = await AsyncStorage.getItem('token');
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+    const getSessionURL = getWeekSession +currentSession + "/week/"+currentWeek;
+    
+    await axios.get(getSessionURL,config)
+      .then((res) => {
+        console.log(res.data);
+    })
+      .catch(err => {
+        console.log(err)});
+    
   };
 
   const weekList =['Week 1','Week 2','Week 3','Week 4','Week 5']
+
 
 
   const renderItem = ({ item, index }) => {
@@ -57,6 +94,7 @@ const SessionScreen = ({navigation}) => {
     <Seperator />
     <Seperator />
      <View>
+
      
      </View>
     </View>
@@ -144,25 +182,29 @@ const allSessionData={
          "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
          "session_title":"ABC Session 1",
          "session_type":"",
-         "session_description":"Week 2"        },{
+         "session_description":"Week 2"        },
+         {
          "session_id":12,
          "session_number":2,
          "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
          "session_title":"ABC Session 1",
          "session_type":"",
-         "session_description":"Week 2"        },{
+         "session_description":"Week 2"        },
+         {
          "session_id":13,
          "session_number":3,
          "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
          "session_title":"ABC Session 1",
          "session_type":"",
-         "session_description":"Week 2"        },{
+         "session_description":"Week 2"        },
+         {
          "session_id":14,
          "session_number":4,
          "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
          "session_title":"ABC Session 1",
          "session_type":"",
-         "session_description":"Week 2"        },{
+         "session_description":"Week 2"        },
+         {
          "session_id":15,
          "session_number":5,
          "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
