@@ -1,22 +1,53 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { View, Text, ImageBackground,Image,StyleSheet,ActivityIndicator } from 'react-native'
 import { Avatar } from 'react-native-paper'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import podcastdata from '../dummy_data/podcasts_by_artists';
-import PDFReaderScreen from './PDFReaderScreen';
 import youTubePlaylist from '../dummy_data/youTubePlaylist';
-import podcast_series from '../dummy_data/podcast_series';
+import {getPodcastDataURL} from '../services/URLs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const MoodLiftScreen = ({navigation}) => {
 
+  const [podcastSeries,setPodcastSeriesData]= useState([]);
+  const [isLoading,setIsLoading]=useState(false);
+
+  const getPodcastData=async()=>{
+    setIsLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('token');
+      let config = {
+        headers:{
+            Authorization:token,
+            "ngrok-skip-browser-warning":"69420"
+        }
+      }
+    const response1 = await axios.get(getPodcastDataURL,config);
+
+    setPodcastSeriesData(response1.data)
+    setIsLoading(false);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+
+    getPodcastData();
+    
+  }, [])
+  
+
   const PodcastArtistThumbnail = ({item}) => {
     return (
-      <TouchableOpacity onPress={()=>{navigation.navigate('AudioPlayerScreen',{data:item})}}>
+      <TouchableOpacity onPress={()=>{navigation.navigate('PodcastSeriesScreen',{data:item})}}>
         <View className="h-33 w-32 rounded-xl  m-2">
           <View className="justify-center">
-          <Avatar.Image size={100}  source={{ uri: item.thumbnail }} className="justify-center ml-3" />
+          <Avatar.Image size={100}  source={{ uri: item.image }} className="justify-center ml-3" />
           </View>
           <View>
             <Text className="text-lg text-black text-center">{item.artist}</Text>
@@ -51,7 +82,6 @@ const MoodLiftScreen = ({navigation}) => {
           <View className="justify-center">
           <Image source={{ uri:item.thumbnail }} className=" justify-center top-1 left-6 justify-items-center h-40 w-40 rounded-xl" />
           </View>
-          {/* <Image source={{ uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRghTRcGozvp_H92lqdbOE3mHjShUeE8UI5Gc9zVy6CsTSzGeYckMLBQ3CGvQwa4faWz6c&usqp=CAU' }} className=" absolute justify-center right-6 top-2 justify-items-center h-12 w-12 rounded-xl" />   */}
           <View className=" justify-items-center">
             <Text className="text-center text-lg text-black mt-2 ">{item.title}</Text>
           </View>
@@ -75,9 +105,9 @@ const MoodLiftScreen = ({navigation}) => {
           <Text className="text-2xl font-bold mt-4 ml-2"> Suggested Artists </Text>
           <View>
           <FlatList
-              data={podcastdata}
+              data={podcastSeries}
               renderItem={({ item }) => PodcastArtistThumbnail( item={item})}
-              keyExtractor={item => item.podcast_id.toString()}
+              keyExtractor={item => item.id.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
@@ -85,16 +115,16 @@ const MoodLiftScreen = ({navigation}) => {
         </View>
 
         <View>
-          <Text className="text-2xl font-bold ml-2"> Popular Podcast Series  </Text>
-          <View>
+          <Text className="text-2xl font-bold mb-2 ml-2"> Popular Podcast Series  </Text>
+          {isLoading ?(<ActivityIndicator size="large" color="#0000ff" />): (<View>
           <FlatList
-              data={podcast_series}
+              data={podcastSeries}
               renderItem={({ item}) => renderPodcastSeries( item={item})}
-              keyExtractor={item => item.podcastId.toString()}
+              keyExtractor={item => item.id.toString()}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
           />
-          </View>
+          </View>)}
         </View>
 
         <View>
@@ -109,20 +139,6 @@ const MoodLiftScreen = ({navigation}) => {
           />
           </View>
         </View>
-
-        <View>
-          <Text className="text-2xl font-bold mt-4 ml-2"> Book Links for Self Improvements  </Text>
-          <View>
-          <FlatList
-              data={podcast_series}
-              renderItem={({ item ,index}) => renderPodcastSeries( item={item})}
-              keyExtractor={item => item.podcastId.toString()}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-          />
-          </View>
-        </View>
-
       </ScrollView>
     </SafeAreaProvider>
   )

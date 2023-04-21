@@ -1,5 +1,5 @@
 import React, { useState,useEffect} from 'react';
-import { View, Text, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, FlatList,Image, TouchableHighlight } from 'react-native';
 import Seperator from '../components/Seperator';
 import SessionList from '../components/SessionList';
 
@@ -57,8 +57,7 @@ const SessionScreen = ({navigation}) => {
     <Seperator />
     <Seperator />
      <View>
-    <SessionList item={sessionData} />
-
+     
      </View>
     </View>
   );

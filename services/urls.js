@@ -1,4 +1,4 @@
-const baseURL = "https://618a-2a09-bac5-3b4c-7eb-00-ca-4c.in.ngrok.io";
+const baseURL = "https://81d0-2a09-bac5-3b4b-15f-00-23-2e5.ngrok-free.app";
 
 export const loginURL = baseURL+"/login";
 
@@ -21,3 +21,8 @@ export const requestDoc = baseURL+"/user/request-doctor/";
 export const getListOfDocs = baseURL+"/get/doctors";
 
 export const getDoctorSuggestedArticle = baseURL+"/get/self-article/";
+
+export const getPodcastDataURL = baseURL+"/user/get-all-podcast"
+
+// export const getPodcastDataByArtistURL = baseURL+"/user/get-podcast-by-artist/"
+
