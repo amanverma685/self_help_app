@@ -6,7 +6,6 @@ const ArticleComponent = ({item}) => {
     const navigation = item.navigation;
 
     const [articleItem,setArticleItem]=useState({});
-    // const navigation = item.navigation;
 
     useEffect(() => {
       setArticleItem(item.item);
@@ -15,8 +14,17 @@ const ArticleComponent = ({item}) => {
     const handleArticle = (item) =>
     {    
         if(item.item.articleType==='audio')
-        {
-          navigation.navigate('AudioPlayerScreen',{item});
+        { 
+          console.log(item.item)
+          const navigationData = {
+            "artist":item.item.articleAuthor,
+            "podcastDescription":"Some important thing to hear",
+            "podcastTitle":item.item.articleTitle,
+            "podcastURL":item.item.articleUrl,
+            "thumbnail":item.item.articleThumbnail
+          }
+
+          navigation.navigate('AudioPlayerScreen',{data:navigationData});
         }
         else if(item.item.articleType==='video')
         {

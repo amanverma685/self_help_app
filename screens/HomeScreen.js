@@ -24,16 +24,17 @@ const HomeScreen = ({navigation}) => {
   const [suggestionLoading,setSuggestionsLoading]=useState(false);
   const [suggestedArticle,setSuggestedArticle]=useState([]);
   const [userId,setUserId]=useState("");
-
+  
   useEffect(() => {
+    getUserID();
     getTenRandomJokes();
     getArticleList();
+
   }, []);
 
   const getTenRandomJokes = async () => {
+    
     const value = await AsyncStorage.getItem('firstName');
-    const lastSessionDone = await AsyncStorage.getItem('lastSessionDone');
-    const lastWeekDone = await AsyncStorage.getItem('lastWeekDone');
     setFirstName(value);
     setLoading(true);
     
@@ -48,23 +49,26 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
+  const getUserID=async()=>{
+    const id = await AsyncStorage.getItem('id');
+    setUserId(id);
+  }
+
 
   const getArticleList = async() => {
 
     setArticleLoading(true);
-    const id = await AsyncStorage.getItem('id');
-    setUserId(id);
+    console.log(userId);
 
     const token = await AsyncStorage.getItem('token');
-    const getURL= getDoctorSuggestedArticle+userId;
-
     let config = {
       headers:{
           Authorization:token,
           "ngrok-skip-browser-warning":"69420"
       }
   }
-    await axios.get(getURL,config)
+  let url = getDoctorSuggestedArticle+userId;
+    await axios.get(url,config)
       .then((res) => {
         setArticlesList(res.data);
         setArticleLoading(false);
@@ -74,19 +78,19 @@ const HomeScreen = ({navigation}) => {
         console.log(err)});
     };
 
-  // const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
   const goToScreen=(screenName)=>
   {
     navigation.navigate(screenName);
   }
-  
 
   const handleRefresh = () => {
     getTenRandomJokes();
   };
 
-  function handleCheckProgress() {
+  const handleRefreshDoctorSuggestion=()=>
+  {
+    getArticleList();
   }
 
   return (
@@ -159,18 +163,32 @@ const HomeScreen = ({navigation}) => {
       <View>
         <PredefinedArticles navigation={navigation} />
       </View>
+      
       <>
+      <View className="flex-row justify-between	">
+           <Text className="text-xl mt-3 ml-3 font-bold"> Your companion's suggestions</Text>
+
+           <TouchableOpacity onPress={handleRefreshDoctorSuggestion}>
+            <View className="flex-row">
+              <Text className="mt-3 font-bold text-lg">Refresh</Text>
+              <IconButton
+                  icon="refresh"
+                  iconColor={MD3Colors.primary20}
+                  size={25}
+                  onPress={() =>{} }
+                />
+            </View>
+           </TouchableOpacity>
+          </View>
+      
       {
         articleLoading ? (<ActivityIndicator size="large" color="#0000ff" />):
 
           (articlesList.length>0 && (
             <View className="ml-1 mt-2 ">
-            <View className="flex-row justify-between	">
-             <Text className="text-xl mt-3 ml-3 mb-2 font-bold"> Companion's Suggestions</Text>
-            </View>
               <FlatList
                 data={articlesList}
-                renderItem={({ item }) => <ArticleComponent item={{item:item,navigation:navigation}} />}
+                renderItem={({ item }) => <ArticleComponent item={{item:item , navigation:navigation}} />}
                 keyExtractor={item => item.id.toString()}
                 horizontal={true}
                 showsHorizontalScrollIndicator={true}
@@ -179,21 +197,6 @@ const HomeScreen = ({navigation}) => {
           ))
           }
       </>
-      
-      {/* <View className="h-96 w-full bg-white rounded-3xl mt-4">
-      <Card>
-        <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
-          <Card.Content>
-            <Text variant="titleLarge">Card title</Text>
-            <Text variant="bodyMedium">Card content</Text>
-          </Card.Content>
-        <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
-        <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>Ok</Button>
-        </Card.Actions>
-      </Card>
-      </View> */}
       </ScrollView>
     
   );

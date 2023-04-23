@@ -17,6 +17,7 @@ const AudioPlayerScreen = ({route}) => {
 
   useEffect(() => {
     setPodcastData(route.params.data);
+    console.log(route.params);
     setArtistThumbnail(route.params.data.thumbnail);    
   }, [])
   

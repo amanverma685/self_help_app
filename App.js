@@ -57,7 +57,6 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -71,6 +70,7 @@ const App = () => {
           <Stack.Screen name="VideoPlayerScreen" component={VideoPlayerScreen} />   
           <Stack.Screen name="ReadingScreen" component={ReadingScreen} />   
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="RequestDoctorScreen" component={RequestDoctorScreen} />
           <Stack.Screen name="PredefinedArticleScreen" component={PredefinedArticleScreen} />
           <Stack.Screen name="RenderSubarticleScreen" component={RenderSubarticleScreen } />
