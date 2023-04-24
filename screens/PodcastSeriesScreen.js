@@ -3,9 +3,8 @@ import React from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Card, Button, IconButton } from 'react-native-paper';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Avatar } from 'react-native-paper';
-import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 const PodcastSeriesScreen = ({route}) => {
@@ -13,6 +12,7 @@ const PodcastSeriesScreen = ({route}) => {
     const [podcastSeries,setPodcastSeries]=useState([]);
     const [podcastArtist,setPodcastArtist]=useState("");
     const [podcastThumbnail,setPodcastThumbnail]=useState("");
+    
     useEffect(() => {
       setPodcastSeries(route.params.data.podcastEpisodes);
       setPodcastArtist(route.params.data.artist);

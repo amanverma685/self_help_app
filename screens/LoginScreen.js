@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { TouchableOpacity, StyleSheet, View,Alert,Keyboard,TouchableWithoutFeedback } from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '../components/Background';
@@ -12,7 +12,7 @@ import { passwordValidator } from '../helpers/PasswordValidator'
 import { loginURL, loginURL_v2 } from '../services/URLs';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect } from 'react';
+
 
 export default function LoginScreen({ navigation }) {
 
