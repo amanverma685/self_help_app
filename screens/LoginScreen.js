@@ -67,6 +67,10 @@ export default function LoginScreen({ navigation }) {
               await AsyncStorage.setItem('assignedDoctorId',""); 
             }
             else {
+<<<<<<< HEAD
+=======
+              //setting doctor id
+>>>>>>> origin/rohit_new
               await AsyncStorage.setItem('assignedDoctorId',response2.data.doctor.id); 
             }
 

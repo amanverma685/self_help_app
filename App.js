@@ -58,8 +58,11 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
+<<<<<<< HEAD
           
           <Stack.Screen name="SessionScreen" component={SessionScreen} />
+=======
+>>>>>>> origin/rohit_new
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
@@ -67,12 +70,17 @@ const App = () => {
           <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />          
           <Stack.Screen name="ArticleComponent" component={ArticleComponent} />   
           <Stack.Screen name="VideoPlayerScreen" component={VideoPlayerScreen} />   
           <Stack.Screen name="ReadingScreen" component={ReadingScreen} />   
+<<<<<<< HEAD
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+=======
+>>>>>>> origin/rohit_new
           <Stack.Screen name="RequestDoctorScreen" component={RequestDoctorScreen} />
           <Stack.Screen name="PredefinedArticleScreen" component={PredefinedArticleScreen} />
           <Stack.Screen name="RenderSubarticleScreen" component={RenderSubarticleScreen } />
