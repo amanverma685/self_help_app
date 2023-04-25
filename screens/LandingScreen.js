@@ -12,9 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createMaterialBottomTabNavigator();
 
 const LandingScreen = ({ route }) => {
+  
+  const [userData,setUserData]=useState({});
     
-  // const {userData} = route.params;
-
   const [isIntialSessionCompleted,setInitialSessionCompleted]= useState("");
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -31,10 +31,14 @@ const LandingScreen = ({ route }) => {
 
   const reloadParent = () => {
     setReload(true);
+    
   };
 
   useEffect(() => {
     initialSession();
+    setUserData(route.params.data);
+    console.log(userData);
+
   }, [reload])
   
 

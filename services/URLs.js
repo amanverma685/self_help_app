@@ -1,4 +1,4 @@
-const baseURL = "https://227f-2a09-bac5-3b4b-18c8-00-278-91.ngrok-free.app";
+const baseURL = "https://023f-2a09-bac5-3b4a-126e-00-1d6-5a.ngrok-free.app";
 
 export const loginURL = baseURL+"/login";
 
@@ -29,3 +29,9 @@ export const getPodcastDataURL = baseURL+"/user/get-all-podcast"
 export const getUserProfile = baseURL + "/user/get/profile/"
 
 export const getWeekSession =  baseURL+"/user/get/session/";
+
+export const getWeekAndSessionQuiz = baseURL+"/user/get/session/"; //0/week/0
+
+export const postWeekAndSessionResponse = baseURL+"/user/post/question-answers";
+
+export const getSessionsInAWeek = baseURL + "/user/get"; // {{patientId}}/full-week/{{weekNumber}}

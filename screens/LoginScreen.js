@@ -62,13 +62,13 @@ export default function LoginScreen({ navigation }) {
             await AsyncStorage.setItem('lastName',response2.data.lastName);  
             await AsyncStorage.setItem('token',token); 
             await AsyncStorage.setItem('isUserLoggedIn','true');
-            // if(response2.data.doctor===null)
-            // {
-            //   await AsyncStorage.setItem('assignedDoctorId',""); 
-            // }
-            // else {
-            //   await AsyncStorage.setItem('assignedDoctorId',response2.data.id); 
-            // }
+            if(response2.data.doctor===null)
+            {
+              await AsyncStorage.setItem('assignedDoctorId',""); 
+            }
+            else {
+              await AsyncStorage.setItem('assignedDoctorId',response2.data.doctor.id); 
+            }
 
             if(response2.data.sessionDone === -1)    
               {
