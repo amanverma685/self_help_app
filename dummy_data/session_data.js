@@ -77,25 +77,29 @@ export default {
             "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
             "session_title":"ABC Session 1",
             "session_type":"",
-            "session_description":"Week 2"        },{
+            "session_description":"Week 2"        },
+            {
             "session_id":12,
             "session_number":2,
             "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
             "session_title":"ABC Session 1",
             "session_type":"",
-            "session_description":"Week 2"        },{
+            "session_description":"Week 2"        },
+            {
             "session_id":13,
             "session_number":3,
             "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
             "session_title":"ABC Session 1",
             "session_type":"",
-            "session_description":"Week 2"        },{
+            "session_description":"Week 2"        },
+            {
             "session_id":14,
             "session_number":4,
             "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
             "session_title":"ABC Session 1",
             "session_type":"",
-            "session_description":"Week 2"        },{
+            "session_description":"Week 2"        },
+            {
             "session_id":15,
             "session_number":5,
             "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",

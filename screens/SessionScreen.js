@@ -1,29 +1,28 @@
 import React, { useState,useEffect} from 'react';
-import { View, Text, FlatList,Image, TouchableOpacity,TouchableHighlight, Alert } from 'react-native';
-import Seperator from '../components/Seperator';
-import { Avatar, Button, IconButton } from "react-native-paper";
-import { getUserProfile } from '../services/URLs';
+import { View, Text, FlatList,Image, TouchableOpacity, Alert } from 'react-native';
+import { getSessionsInAWeek, getUserProfile } from '../services/URLs';
 // import SessionList from '../components/SessionList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getWeekSession } from '../services/URLs';
 import axios from 'axios';
 import SessionButtonComponent from '../components/SessionButtonComponent';
-import { ScrollView } from 'react-native-gesture-handler';
-import { style } from 'deprecated-react-native-prop-types/DeprecatedViewPropTypes';
 
 
 
 const SessionScreen = ({navigation}) => {
-  
+
+  const [currentSession,setCurrentSession]=useState(1);
   const [currentWeek,setCurrentWeek]=useState(1);
   const [selectedWeek,setSelectedWeek] = useState(1);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
+  const [sessionData,setSessionData]= useState([]);
 
   useEffect(() => {
     getUserProfileData();
-  }, [selectedWeek])
+    getSessionsInSelectedWeek();
+  }, [])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
+
   
   const getUserProfileData=async()=>{
     const id = await AsyncStorage.getItem('id');
@@ -38,9 +37,16 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-        setSelectedButtonIndex(res.data.weekDone)
-        setCurrentWeek(res.data.weekDone+1);
-        setCurrentSession(res.data.sessionDone+1)
+        
+        setSelectedButtonIndex(res.data.weekDone);
+        setCurrentWeek(res.data.weekDone+1);;
+        setCurrentSession(res.data.sessionDone+1);
+        
+
+        // console.log("selectedButtonIndex ---- "+selectedButtonIndex);
+        // console.log("currentSession ---- "+currentSession);
+        // console.log("currentWeek ---- "+currentWeek);
+
     })
       .catch(err => {
         console.log(err)});
@@ -67,6 +73,27 @@ const SessionScreen = ({navigation}) => {
 
   };
 
+  const getSessionsInSelectedWeek=async()=>{
+
+    const token = await AsyncStorage.getItem('token');
+
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+
+  const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
+  await axios.get(sessionsInAWeek,config)
+      .then((res) => {
+        setSessionData(res.data)
+
+    })
+      .catch(err => {
+        console.log(err)});
+    };
+
 
   return (
     <View>
@@ -79,10 +106,10 @@ const SessionScreen = ({navigation}) => {
       </View>
       <View className="mt-3">
       <FlatList
-      data={weekButtons}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      renderItem={({ item, index }) => (
+        data={weekButtons}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => (
         <TouchableOpacity 
         className="border-black border-1 m-2 ml-3 shadow-lg shadow-black"
           onPress={() => handleButtonPress(index)}
@@ -104,126 +131,14 @@ const SessionScreen = ({navigation}) => {
     <View className="m-2">
       </View>
         <FlatList
-        data={allSessionData['1']}
+        data={sessionData}
         keyExtractor={(item) => item.session_id.toString()}
-        renderItem={({ item }) => <SessionButtonComponent item={item}  navigation={navigation} />}
-      />
+        renderItem={({ item ,index}) =><SessionButtonComponent item={item} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />
+      }
+        />
     </View>
   );
 };
 
 export default SessionScreen;
 
-const allSessionData={
-  "1":[
-     {   "session_id":1,
-         "session_number":1,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 1"
-     },
-     {
-         "session_id":2,
-         "session_number":2,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"week 1"        },
-     {
-         "session_id":3,
-         "session_number":3,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"week 1"        },
-     {
-         "session_id":4,
-         "session_number":4,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"week 1"        },
-     {
-         "session_id":5,
-         "session_number":5,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"week 1"        }],
- "2" :[
-     
-     {   "session_id":11,
-         "session_number":1,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"        },
-         {
-         "session_id":12,
-         "session_number":2,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"        },
-         {
-         "session_id":13,
-         "session_number":3,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"        },
-         {
-         "session_id":14,
-         "session_number":4,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"        },
-         {
-         "session_id":15,
-         "session_number":5,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"        },
-     {
-         "session_id":16,
-         "session_number":6,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"
-     },
-     {
-         "session_id":20,
-         "session_number":7,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"
-     },{
-         "session_id":17,
-         "session_number":8,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"
-     },{
-         "session_id":18,
-         "session_number":9,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"
-     },{
-         "session_id":19,
-         "session_number":10,
-         "session_image_url":"https://images.pexels.com/photos/1165991/pexels-photo-1165991.jpeg?auto=compress&cs=tinysrgb&w=1600",
-         "session_title":"ABC Session 1",
-         "session_type":"",
-         "session_description":"Week 2"
-     }
- ]
- 
-}

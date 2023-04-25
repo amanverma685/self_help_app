@@ -1,10 +1,22 @@
 import { View, Text,TouchableOpacity,Image } from 'react-native'
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Avatar, IconButton } from 'react-native-paper'
+import { useState } from 'react'
 
-const SessionButtonComponent = ({item,navigation}) => {
+const SessionButtonComponent = ({item,currentSession,currentWeek,navigation}) => {
+  
+  const [sessionQuiz,setSessionQuiz] = useState([]);
+
+  useEffect(() => {
+    setSessionQuiz(item['sessionQuestions']);
+  }, [])
+  
+
   const navigateToQuizScreen=()=>{
-    navigation.navigate('SessionQuizComponent',{item:item})  }
+    sessionQuiz['currentSession']= currentSession;
+    sessionQuiz['currentWeek']=currentWeek;
+    
+    navigation.navigate('SessionQuizComponent',{item:sessionQuiz})  }
 
   return (
     <View className="flex flex-row m-3">
@@ -18,7 +30,7 @@ const SessionButtonComponent = ({item,navigation}) => {
         </TouchableOpacity>
       </View>
       <View>
-        <IconButton icon="arrow-right" onPress={navigateToQuizScreen} size={50} />
+        <IconButton icon="run" iconColor='black' onPress={navigateToQuizScreen} size={50} />
       </View>
     </View>
   )

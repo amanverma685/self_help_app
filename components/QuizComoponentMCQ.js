@@ -3,6 +3,8 @@ import { View, Text,Image, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const MCQQuestion = ({ question, option1,option2,option3,option4,value1,value2,value3,value4, onSelect,imageURL }) => {
+  
+  
   const [selectedOption, setSelectedOption] = useState(null);
   const [options,setOptions]=useState([]);
   const [optionValue,setOptionValue]=useState({});
@@ -10,7 +12,6 @@ const MCQQuestion = ({ question, option1,option2,option3,option4,value1,value2,v
   const handleSelectOption = (option,index) => {
     setSelectedOption(option);
     let data= "option"+(index+1);
-    console.log(optionValue[data]);
     onSelect(optionValue[data],option);
   };
 
