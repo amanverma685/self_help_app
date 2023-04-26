@@ -69,7 +69,9 @@ const SessionScreen = ({navigation}) => {
         }])
       );
     else 
+
     setSelectedWeek(index+1);
+    
 
   };
 

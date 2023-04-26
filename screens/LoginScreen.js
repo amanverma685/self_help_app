@@ -134,6 +134,8 @@ export default function LoginScreen({ navigation }) {
   return (
     <Background>
       <Header>Welcome back...</Header>
+      <View className="h-20 w-20">
+      </View>
       <TextInput
         label="Email"
         returnKeyType="next"

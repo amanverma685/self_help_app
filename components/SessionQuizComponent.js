@@ -1,4 +1,4 @@
-import { View, Text,Button,Image,ActivityIndicator } from 'react-native'
+import { View, Text,Button,Image,ActivityIndicator, Alert } from 'react-native'
 import React,{useEffect, useState} from 'react'
 import axios from 'axios';
 import MCQQuestion from './QuizComoponentMCQ';
@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { postInitialSessionResponse } from '../services/URLs';
 
 const SessionQuizComponent = ({route}) => {
+  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [questions,setQuestions]=useState(route.params.item);
@@ -48,6 +49,17 @@ const SessionQuizComponent = ({route}) => {
       {
         console.log(error);
       }
+
+      return (
+        Alert.alert("Your answers has been submitted successfully..",
+        "Thanks for completing the session.",
+        [{
+          text:"Continue",
+          onPress:()=>{
+            
+          }
+        }])
+      )
     }
 
   const handleAnswer = (optionValue,option) => {

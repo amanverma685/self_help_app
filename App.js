@@ -24,10 +24,12 @@ import YouTubeScreen from './screens/YouTubeScreen';
 import MoodLiftScreen from './screens/MoodLiftScreen';
 import PodcastSeriesScreen from './screens/PodcastSeriesScreen';
 import SessionQuizComponent from './components/SessionQuizComponent';
-
+import { useTranslation } from 'react-i18next';
 const Stack = createStackNavigator();
 
+
 const App = () => {
+  
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
   React.useEffect( () => {
@@ -58,9 +60,9 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
 
           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
+          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
