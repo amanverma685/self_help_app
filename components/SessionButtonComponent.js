@@ -3,17 +3,26 @@ import React,{useEffect} from 'react'
 import { Avatar, IconButton } from 'react-native-paper'
 import { useState } from 'react'
 
-const SessionButtonComponent = ({item,currentSession,currentWeek,navigation}) => {
+const SessionButtonComponent = ({item,index,currentSession,currentWeek,navigation}) => {
   
   const [sessionQuiz,setSessionQuiz] = useState([]);
 
   useEffect(() => {
-    console.log(item)
     setSessionQuiz(item['sessionQuestions']);
   }, [])
   
 
   const navigateToQuizScreen=()=>{
+
+    if(index >= currentSession)
+    return(
+      Alert.alert("Please complete the previous session first","Try to complete the previous sessions first and then try this session again.Hope you are enjoying.",[
+        {
+          text: 'I will complete it all'
+        }
+      ])
+    )
+
     sessionQuiz['currentSession']= currentSession;
     sessionQuiz['currentWeek']=currentWeek;
     

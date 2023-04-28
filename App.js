@@ -60,12 +60,13 @@ const App = () => {
               component={OnboardingScreen}
             />
           )}
-           <Stack.Screen name="LoginScreen"   component={LoginScreen} />
+
+          <Stack.Screen name="LoginScreen"   component={LoginScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
-          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
           <Stack.Screen name="AudioPlayerScreen" component={AudioPlayerScreen} />   
           <Stack.Screen name="InitialQuizScreen" component={InitialQuizScreen} />
           <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />          

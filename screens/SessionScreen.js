@@ -1,5 +1,5 @@
 import React, { useState,useEffect} from 'react';
-import { View, Text, FlatList,Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList,Image, TouchableOpacity, Alert,ActivityIndicator } from 'react-native';
 import { getSessionsInAWeek, getUserProfile } from '../services/URLs';
 // import SessionList from '../components/SessionList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +15,7 @@ const SessionScreen = ({navigation}) => {
   const [selectedWeek,setSelectedWeek] = useState(1);
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [sessionData,setSessionData]= useState([]);
+  const [isLoading,setIsLoading]=useState(true);
 
   useEffect(() => {
     getUserProfileData();
@@ -41,10 +42,6 @@ const SessionScreen = ({navigation}) => {
         setSelectedButtonIndex(res.data.weekDone);
         setCurrentWeek(res.data.weekDone+1);;
         setCurrentSession(res.data.sessionDone+1);
-
-        console.log("selectedButtonIndex ---- "+selectedButtonIndex);
-        console.log("currentSession ---- "+currentSession);
-        console.log("currentWeek ---- "+currentWeek);
 
     })
       .catch(err => {
@@ -74,7 +71,7 @@ const SessionScreen = ({navigation}) => {
   };
 
   const getSessionsInSelectedWeek=async()=>{
-
+    setIsLoading(true);
     const token = await AsyncStorage.getItem('token');
 
     let config = {
@@ -87,11 +84,12 @@ const SessionScreen = ({navigation}) => {
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
+        setSessionData(res.data);
 
-        setSessionData(res.data)
     })
       .catch(err => {
         console.log(err)});
+    setIsLoading(false);
     };
 
 
@@ -130,14 +128,18 @@ const SessionScreen = ({navigation}) => {
     </View>
     <View className="m-2">
       </View>
+      <>
+      {isLoading ?(<ActivityIndicator size="large" color="#0000ff" />):
         <FlatList
         data={sessionData}
         keyExtractor={(item) => item.session_id.toString()}
-        renderItem={({ item ,index}) =>{
-        <SessionButtonComponent item={item} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />}
+        renderItem={({ item,index}) =>
+        <SessionButtonComponent item={item} index={index} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />
       }
-        />
+        />}
+        </>
     </View>
+    
   );
 };
 
