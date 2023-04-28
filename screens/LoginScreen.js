@@ -133,8 +133,8 @@ export default function LoginScreen({ navigation }) {
  
   return (
     <Background>
-      <Header>Welcome back...</Header>
-      <View className="h-20 w-20">
+      <Header>Login </Header>
+      <View className=" w-20">
       </View>
       <TextInput
         label="Email"
@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
   },
   forgot: {
     fontSize: 13,
+    
     color: theme.colors.secondary,
   },
   link: {

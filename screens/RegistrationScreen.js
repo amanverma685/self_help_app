@@ -85,7 +85,7 @@ export default function RegistrationScreen({ navigation }) {
     <ScrollView>
       <Background>
       <View>
-        <Text className="text-2xl font-bold mt-10">Create Account</Text>
+        <Text className="text-2xl font-bold  mt-10 mb-10">Create Account</Text>
       </View>
       <TextInput
         label="First Name "
@@ -123,26 +123,30 @@ export default function RegistrationScreen({ navigation }) {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
+      <View className="flex flex-row">
       <TextInput
-        label="Gender"
+        label="Gender(M/F)"
         returnKeyType="next"
         value={gender.value}
         onChangeText={(text) => setGender({ value: text, error: '' })}
         error={!!gender.error}
         errorText={gender.error}
+        className="w-32 ml-36"
       />
 
       <TextInput  
-        label="Date of Birth"
+        label="DOB(mm/dd/yyyy)"
         returnKeyType="next"
         value={dateOfBirth.value}
         onChangeText={(text) => setDateOfBirth({ value: text, error: '' })}
         error={!!dateOfBirth.error}
         errorText={dateOfBirth.error}
+        className="w-40"
       />
+      </View>
 
       <TextInput
-        label="Contact"
+        label="Contact(+91)"
         returnKeyType="next"
         value={contact.value}
         onChangeText={(text) => setContact({ value: text, error: '' })}
@@ -164,10 +168,11 @@ export default function RegistrationScreen({ navigation }) {
         mode="contained"
         onPress={onSignUpPressed}
         style={{ marginTop: 24 }}
+        
       >
         Sign Up
       </Button>
-      <View style={styles.row}>
+      <View style={styles.row} className="mb-20">
         <Text>Already have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
           <Text style={styles.link}>Login</Text>

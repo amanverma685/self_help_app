@@ -77,8 +77,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   image: {
-    width: 200,
-    height: 200,
+    justifyContent:'center',
+    width: 400,
+    height: 400,
   },
   card: {
     flex: 1,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 50,
+    fontSize:24,
     backgroundColor: 'transparent'
   },
   done: {

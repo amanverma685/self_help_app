@@ -135,7 +135,8 @@ const SessionScreen = ({navigation}) => {
         <FlatList
         data={sessionData}
         keyExtractor={(item) => item.session_id.toString()}
-        renderItem={({ item ,index}) =><SessionButtonComponent item={item} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />
+        renderItem={({ item ,index}) =>{
+        <SessionButtonComponent item={item} index={index} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />}
       }
         />
     </View>

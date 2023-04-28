@@ -6,7 +6,7 @@ import { theme } from '../core/theme'
 export default function Background({ children }) {
   return (
     <ImageBackground
-      source={require('../assets/image3.png')}
+      source={require('../assets/selfcare.jpg')}
       
       style={styles.background}
     >
