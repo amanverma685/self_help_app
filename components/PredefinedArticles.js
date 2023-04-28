@@ -25,6 +25,7 @@ const PredefinedArticles = ({navigation}) => {
 
 export default PredefinedArticles
 
+// Especially Designed for you screen
 
 const PopulateArticles = ({item,navigation}) => {
     const itemData = item;

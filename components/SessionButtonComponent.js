@@ -3,21 +3,12 @@ import React,{useEffect} from 'react'
 import { Avatar, IconButton } from 'react-native-paper'
 import { useState } from 'react'
 
-const SessionButtonComponent = ({item,index,currentSession,currentWeek,navigation}) => {
+const SessionButtonComponent = ({item,currentSession,currentWeek,navigation}) => {
   
   const [sessionQuiz,setSessionQuiz] = useState([]);
 
   useEffect(() => {
-    if(index>currentSession)
-    return(
-      Alert.alert("Are you want to skip sessions?",
-        "Sorry you are not allowed skip sessions. Please complete the previous sessions and then move forward. Thank you",
-        [{
-          text:"Yes I will complete previous one first",
-          onPress:()=>{},
-          style:'cancel'
-        }])
-    )
+    console.log(item)
     setSessionQuiz(item['sessionQuestions']);
   }, [])
   

@@ -41,11 +41,10 @@ const SessionScreen = ({navigation}) => {
         setSelectedButtonIndex(res.data.weekDone);
         setCurrentWeek(res.data.weekDone+1);;
         setCurrentSession(res.data.sessionDone+1);
-        
 
-        // console.log("selectedButtonIndex ---- "+selectedButtonIndex);
-        // console.log("currentSession ---- "+currentSession);
-        // console.log("currentWeek ---- "+currentWeek);
+        console.log("selectedButtonIndex ---- "+selectedButtonIndex);
+        console.log("currentSession ---- "+currentSession);
+        console.log("currentWeek ---- "+currentWeek);
 
     })
       .catch(err => {
@@ -53,10 +52,9 @@ const SessionScreen = ({navigation}) => {
     };
   
   const handleButtonPress = (index) => {
-    
+
     setSelectedButtonIndex(index);
-    // console.log("selectedWeek -- "+selectedWeek)
-    // console.log("selectedButtonIndex --- "+selectedButtonIndex)
+
 
     if(currentWeek<index+1)
       return (
@@ -89,8 +87,8 @@ const SessionScreen = ({navigation}) => {
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
-        setSessionData(res.data)
 
+        setSessionData(res.data)
     })
       .catch(err => {
         console.log(err)});
@@ -136,7 +134,7 @@ const SessionScreen = ({navigation}) => {
         data={sessionData}
         keyExtractor={(item) => item.session_id.toString()}
         renderItem={({ item ,index}) =>{
-        <SessionButtonComponent item={item} index={index} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />}
+        <SessionButtonComponent item={item} currentSession={currentSession} currentWeek={currentWeek} navigation={navigation} />}
       }
         />
     </View>

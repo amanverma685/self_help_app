@@ -47,7 +47,7 @@ const App = () => {
     }
     initialLaunch();
 
-    AsyncStorage.removeItem('isAppFirstLaunched');
+    // AsyncStorage.removeItem('isAppFirstLaunched');
   }, []);
 
   return (
@@ -61,9 +61,8 @@ const App = () => {
             />
           )}
            <Stack.Screen name="LoginScreen"   component={LoginScreen} />
-          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
           <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
-         
+          <Stack.Screen name="SessionScreen"   component={SessionScreen} />
           <Stack.Screen name="LandingScreen" component={LandingScreen} />
           <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />   
           <Stack.Screen name="HomeScreen" component={HomeScreen} />

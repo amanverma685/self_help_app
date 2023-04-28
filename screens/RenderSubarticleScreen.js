@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
   },
   image: {
     justifyContent:'center',
-    width: 400,
-    height: 400,
+    width: 300,
+    height: 300,
   },
   card: {
     flex: 1,
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize:24,
+    fontSize:20,
     backgroundColor: 'transparent'
   },
   done: {
