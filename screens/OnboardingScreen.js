@@ -26,13 +26,13 @@ const slides = [
     id: '2',
     image: require('../assets/image2.png'),
     title: 'Achieve Your Goals',
-    subtitle: ' Define your goals in a clear and specific way, with measurable outcomes and deadlines. This will help you focus your efforts and track your progress.',
+    subtitle: 'This application will help you focus your efforts and track your progress.',
   },
   {
     id: '3',
     image: require('../assets/image3.png'),
     title: 'Increase Your Value',
-    subtitle: ' Identify the areas where you excel and the areas where you need improvement. This will help you focus your efforts on developing your strengths and addressing your weaknesses.',
+    subtitle: 'Just do what your therapist recommend and you will be okay',
   },
 ];
 
