@@ -18,7 +18,7 @@ const SessionButtonComponent = ({item,index,currentSession,currentWeek,navigatio
     return(
       Alert.alert("Please complete the previous session first","Try to complete the previous sessions first and then try this session again.Hope you are enjoying.",[
         {
-          text: 'I will complete it all'
+          text: 'I will complete it all..'
         }
       ])
     )

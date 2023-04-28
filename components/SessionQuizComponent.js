@@ -15,9 +15,8 @@ const SessionQuizComponent = ({route}) => {
   const [answerOption,setAnswerOption]=useState([]);
   const [weekNumber,setWeekNumber]=useState(route.params.item.currentWeek)
   const [sessionNumber,setSessionNumber]=useState(route.params.item.currentSession)
-
+  
   const handleSubmit=async()=>{
-    
     const token = await AsyncStorage.getItem('token');
     const patientId = await AsyncStorage.getItem('id');
 

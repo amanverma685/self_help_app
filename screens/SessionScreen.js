@@ -64,8 +64,11 @@ const SessionScreen = ({navigation}) => {
         }])
       );
     else 
-
+    
     setSelectedWeek(index+1);
+    
+  getSessionsInSelectedWeek();
+
     
 
   };
@@ -80,7 +83,7 @@ const SessionScreen = ({navigation}) => {
           "ngrok-skip-browser-warning":"69420"
       }
   }
-
+  console.log(currentWeek);
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
