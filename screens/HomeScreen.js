@@ -13,9 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PredefinedArticles from '../components/PredefinedArticles';
 import { getDoctorSuggestedArticle } from '../services/URLs';
 import axios from 'axios';
-import { userAppUsage } from '../services/URLs';
-import { BackHandler, Alert } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   
@@ -27,30 +24,15 @@ const HomeScreen = ({navigation}) => {
   const [suggestionLoading,setSuggestionsLoading]=useState(false);
   const [suggestedArticle,setSuggestedArticle]=useState([]);
   const [userId,setUserId]=useState("");
-  const isFocused = useIsFocused();
 
   useEffect(() => {
     getUserID();
     getTenRandomJokes();
     getArticleList();
 
-    const handleBackButton = () => {
-      if (isFocused) {
-        console.log("isFocussed"+isFocused)
-        // Alert.alert("Are you sure want to exit?","",[{text:"Yes",onPress:()=>BackHandler.exitApp()},{text:"No",onPress:()=>console.log("No")}])
-        BackHandler.exitApp();
-        return true;
-      } else {
-        return false;
-      }
-    };
+    
 
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
-    };
-
-  }, [isFocused]);
+  }, []);
 
   const getTenRandomJokes = async () => {
     

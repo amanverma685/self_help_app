@@ -25,12 +25,12 @@ import MoodLiftScreen from "./screens/MoodLiftScreen";
 import PodcastSeriesScreen from "./screens/PodcastSeriesScreen";
 import SessionQuizComponent from "./components/SessionQuizComponent";
 import { useTranslation } from "react-i18next";
-import axios from 'axios'
+import { AppState } from "react-native";
 
 //=================for notifications=======================================================
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
+import { Alert, Platform } from "react-native";
 // --======================================================================================
 
 Notifications.setNotificationHandler({
@@ -78,6 +78,7 @@ async function registerForPushNotificationsAsync() {
 const Stack = createStackNavigator();
 
 const App = () => {
+
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
   //==================================================================================================
@@ -137,7 +138,6 @@ const App = () => {
     initialLaunch();
 
     // AsyncStorage.removeItem('isAppFirstLaunched');
-    
   
   }, []);
 

@@ -5,6 +5,9 @@ import { getSessionsInAWeek, getUserProfile } from '../services/URLs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SessionButtonComponent from '../components/SessionButtonComponent';
+import { BackHandler } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import { async } from '@firebase/util';
 
 const SessionScreen = ({navigation}) => {
 
@@ -14,16 +17,25 @@ const SessionScreen = ({navigation}) => {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [sessionData,setSessionData]= useState([]);
   const [isLoading,setIsLoading]=useState(true);
+  const isFocused = useIsFocused();
+  const [firstTimeCall,setFirstTimeCall]=useState(true);
 
   useEffect(() => {
-    getUserProfileData();
-    getSessionsInSelectedWeek();
+    
+    if(firstTimeCall===true)
+    { 
+      getUserProfileData();
+    }
+
+    getSessionsInSelectedWeek(currentWeek);
+
   }, [])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
 
   
   const getUserProfileData=async()=>{
+
     const id = await AsyncStorage.getItem('id');
     const token = await AsyncStorage.getItem('token');
     const userProfileURL = getUserProfile+id;
@@ -36,10 +48,10 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-        if(res.data.weekDone === -1)
+        if(res.data.weekDone === -1 || res.data.sessionDone === -1)
         {
           setSelectedButtonIndex(res.data.weekDone);
-          setCurrentWeek(res.data.weekDone+2);;
+          setCurrentWeek(res.data.weekDone+2);
           setCurrentSession(res.data.sessionDone+2);
         }
         else {
@@ -51,13 +63,14 @@ const SessionScreen = ({navigation}) => {
     })
       .catch(err => {
         console.log(err)});
+        setFirstTimeCall(false);
     };
   
-  const handleButtonPress = (index) => {
+  const handleButtonPress =async (index) => {
 
     setSelectedButtonIndex(index);
-
-
+    setSelectedWeek(index+1);
+    
     if(currentWeek<index+1)
       return (
         Alert.alert("Are you want to skip sessions?",
@@ -68,13 +81,16 @@ const SessionScreen = ({navigation}) => {
           style:'cancel'
         }])
       );
-    else 
-    
-    setSelectedWeek(index+1);    
+
+    else{
+      getSessionsInSelectedWeek(index+1) ; 
+    }
+  
+
 
   };
 
-  const getSessionsInSelectedWeek=async()=>{
+  const getSessionsInSelectedWeek=async(currentWeek)=>{
     setIsLoading(true);
     const token = await AsyncStorage.getItem('token');
 
@@ -84,14 +100,17 @@ const SessionScreen = ({navigation}) => {
           "ngrok-skip-browser-warning":"69420"
       }
   }
-  console.log(currentWeek);
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
+  
+  console.log(sessionsInAWeek)
+
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
         setSessionData(res.data);
     })
       .catch(err => {
         console.log(err)});
+
     setIsLoading(false);
     };
 
