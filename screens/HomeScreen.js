@@ -93,6 +93,7 @@ const HomeScreen = ({navigation}) => {
   const handleRefreshDoctorSuggestion=()=>
   {
     getArticleList();
+    console.log(articlesList);
   }
 
   return (
