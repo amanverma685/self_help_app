@@ -27,11 +27,13 @@ import SessionQuizComponent from './components/SessionQuizComponent';
 import { useTranslation } from 'react-i18next';
 const Stack = createStackNavigator();
 
+
 const App = () => {
   
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
   React.useEffect( () => {
+    
     async function initialLaunch()
     {
       const appData = await AsyncStorage.getItem('isAppFirstLaunched');
@@ -47,7 +49,6 @@ const App = () => {
     initialLaunch();
 
     // AsyncStorage.removeItem('isAppFirstLaunched');
-
     
   
   }, []);
