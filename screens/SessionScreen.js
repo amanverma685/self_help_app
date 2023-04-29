@@ -87,8 +87,8 @@ const SessionScreen = ({navigation}) => {
       if(currentWeek>index+1)
       setCurrentSession(6);
       else 
-      setCurrentSession(1);
-
+      getUserProfileData();
+      
       getSessionsInSelectedWeek(index+1) ; 
     }
   };
