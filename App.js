@@ -26,6 +26,7 @@ import PodcastSeriesScreen from "./screens/PodcastSeriesScreen";
 import SessionQuizComponent from "./components/SessionQuizComponent";
 import { useTranslation } from "react-i18next";
 import { AppState } from "react-native";
+import { GlobalContext } from "./services/GlobalContext";
 
 //=================for notifications=======================================================
 import * as Device from "expo-device";
@@ -78,7 +79,6 @@ async function registerForPushNotificationsAsync() {
 const Stack = createStackNavigator();
 
 const App = () => {
-
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null);
 
   //==================================================================================================
@@ -89,20 +89,18 @@ const App = () => {
   const responseListener = useRef();
 
   //function to store token into the database
-  const storeToken = async(token) => {
-    console.log("Token to be stored", token)
+  const storeToken = async (token) => {
+    console.log("Token to be stored", token);
     // await axios.post(``).then((res) => {
     //   console.log(res.data)
     // })
     // .catch(err => console.log(err));
-  }
+  };
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>{
-
+    registerForPushNotificationsAsync().then((token) => {
       setExpoPushToken(token);
       storeToken(token);
-
     });
 
     notificationListener.current =
@@ -115,7 +113,7 @@ const App = () => {
         console.log(response);
       });
 
-      //========code to unsubscribe=======
+    //========code to unsubscribe=======
     // return () => {
     //   Notifications.removeNotificationSubscription(
     //     notificationListener.current
@@ -138,72 +136,76 @@ const App = () => {
     initialLaunch();
 
     // AsyncStorage.removeItem('isAppFirstLaunched');
-  
   }, []);
 
   return (
     isAppFirstLaunched != null && (
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {isAppFirstLaunched && (
-            <Stack.Screen
-              name="OnboardingScreen"
-              component={OnboardingScreen}
-            />
-          )}
+      <GlobalContext.Provider value={{expoPushToken}}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {isAppFirstLaunched && (
+              <Stack.Screen
+                name="OnboardingScreen"
+                component={OnboardingScreen}
+              />
+            )}
 
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen
-            name="RegistrationScreen"
-            component={RegistrationScreen}
-          />
-          <Stack.Screen name="LandingScreen" component={LandingScreen} />
-          <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-          <Stack.Screen name="SessionScreen" component={SessionScreen} />
-          <Stack.Screen
-            name="AudioPlayerScreen"
-            component={AudioPlayerScreen}
-          />
-          <Stack.Screen
-            name="InitialQuizScreen"
-            component={InitialQuizScreen}
-          />
-          <Stack.Screen
-            name="ResetPasswordScreen"
-            component={ResetPasswordScreen}
-          />
-          <Stack.Screen name="ArticleComponent" component={ArticleComponent} />
-          <Stack.Screen
-            name="VideoPlayerScreen"
-            component={VideoPlayerScreen}
-          />
-          <Stack.Screen name="ReadingScreen" component={ReadingScreen} />
-          <Stack.Screen name="ChatScreen" component={ChatScreen} />
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-          <Stack.Screen
-            name="RequestDoctorScreen"
-            component={RequestDoctorScreen}
-          />
-          <Stack.Screen
-            name="PredefinedArticleScreen"
-            component={PredefinedArticleScreen}
-          />
-          <Stack.Screen
-            name="RenderSubarticleScreen"
-            component={RenderSubarticleScreen}
-          />
-          <Stack.Screen name="YouTubeScreen" component={YouTubeScreen} />
-          <Stack.Screen
-            name="PodcastSeriesScreen"
-            component={PodcastSeriesScreen}
-          />
-          <Stack.Screen
-            name="SessionQuizComponent"
-            component={SessionQuizComponent}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen
+              name="RegistrationScreen"
+              component={RegistrationScreen}
+            />
+            <Stack.Screen name="LandingScreen" component={LandingScreen} />
+            <Stack.Screen name="MoodLiftScreen" component={MoodLiftScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="SessionScreen" component={SessionScreen} />
+            <Stack.Screen
+              name="AudioPlayerScreen"
+              component={AudioPlayerScreen}
+            />
+            <Stack.Screen
+              name="InitialQuizScreen"
+              component={InitialQuizScreen}
+            />
+            <Stack.Screen
+              name="ResetPasswordScreen"
+              component={ResetPasswordScreen}
+            />
+            <Stack.Screen
+              name="ArticleComponent"
+              component={ArticleComponent}
+            />
+            <Stack.Screen
+              name="VideoPlayerScreen"
+              component={VideoPlayerScreen}
+            />
+            <Stack.Screen name="ReadingScreen" component={ReadingScreen} />
+            <Stack.Screen name="ChatScreen" component={ChatScreen} />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen
+              name="RequestDoctorScreen"
+              component={RequestDoctorScreen}
+            />
+            <Stack.Screen
+              name="PredefinedArticleScreen"
+              component={PredefinedArticleScreen}
+            />
+            <Stack.Screen
+              name="RenderSubarticleScreen"
+              component={RenderSubarticleScreen}
+            />
+            <Stack.Screen name="YouTubeScreen" component={YouTubeScreen} />
+            <Stack.Screen
+              name="PodcastSeriesScreen"
+              component={PodcastSeriesScreen}
+            />
+            <Stack.Screen
+              name="SessionQuizComponent"
+              component={SessionQuizComponent}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GlobalContext.Provider>
     )
   );
 };
