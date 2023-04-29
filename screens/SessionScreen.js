@@ -71,6 +71,7 @@ const SessionScreen = ({navigation}) => {
     setSelectedButtonIndex(index);
     setSelectedWeek(index+1);
     
+    
     if(currentWeek<index+1)
       return (
         Alert.alert("Are you want to skip sessions?",
@@ -83,11 +84,13 @@ const SessionScreen = ({navigation}) => {
       );
 
     else{
+      if(currentWeek>index+1)
+      setCurrentSession(6);
+      else 
+      setCurrentSession(1);
+
       getSessionsInSelectedWeek(index+1) ; 
     }
-  
-
-
   };
 
   const getSessionsInSelectedWeek=async(currentWeek)=>{
@@ -101,8 +104,6 @@ const SessionScreen = ({navigation}) => {
       }
   }
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
-  
-  console.log(sessionsInAWeek)
 
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
