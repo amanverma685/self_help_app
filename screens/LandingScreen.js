@@ -44,7 +44,7 @@ const LandingScreen = ({ route }) => {
     (isIntialSessionCompleted === "Yes" && (
       <Tab.Navigator
         initialRouteName="HomeScreen"
-        activeColor="blue"
+        activeColor="teal"
         inactiveColor="black"
         activeBackgroundColor="gray"
         inactiveBackgroundColor="green"
@@ -65,7 +65,7 @@ const LandingScreen = ({ route }) => {
           name="SessionScreen"
           component={SessionScreen}
           onPress={reloadScreen}
-          options={{
+          options={({ navigation })=>({
             tabBarLabel: "Session",
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
@@ -74,7 +74,8 @@ const LandingScreen = ({ route }) => {
                 size={26}
               />
             ),
-          }}
+            screenProps: { navigation },
+          })}
         />
         <Tab.Screen
           name="Relax"

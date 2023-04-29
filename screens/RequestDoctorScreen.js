@@ -19,7 +19,6 @@ import { getListOfDocs,requestDoc } from '../services/URLs';
 const RequestDoctorScreen = ({ visible, onClose }) => {
     
     const [doctorData,setDoctorData] = useState([]);
-
     
     useEffect(() => {    
         getListOfDoctors();

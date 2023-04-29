@@ -38,10 +38,19 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-        
-        setSelectedButtonIndex(res.data.weekDone);
-        setCurrentWeek(res.data.weekDone+1);;
-        setCurrentSession(res.data.sessionDone+1);
+
+        console.log(res)
+        if(res.data.weekDone === -1)
+        {
+          setSelectedButtonIndex(res.data.weekDone);
+          setCurrentWeek(res.data.weekDone+2);;
+          setCurrentSession(res.data.sessionDone+2);
+        }
+        else {
+          setSelectedButtonIndex(res.data.weekDone);
+          setCurrentWeek(res.data.weekDone+1);;
+          setCurrentSession(res.data.sessionDone+1);
+        }
 
     })
       .catch(err => {
@@ -65,11 +74,7 @@ const SessionScreen = ({navigation}) => {
       );
     else 
     
-    setSelectedWeek(index+1);
-    
-  getSessionsInSelectedWeek();
-
-    
+    setSelectedWeek(index+1);    
 
   };
 
@@ -88,6 +93,7 @@ const SessionScreen = ({navigation}) => {
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
         setSessionData(res.data);
+        console.log(sessionData);
 
     })
       .catch(err => {

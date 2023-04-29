@@ -15,7 +15,15 @@ import { db } from "../services/FirebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RequestDoctorScreen from "./RequestDoctorScreen";
 
-export function ChatScreen() {
+export function ChatScreen({navigation}) {
+
+  const closeModel=()=>{
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'LandingScreen'}],
+    });
+  }
+  const [isModelVisible, setIsModelVisible] = useState(false);
   const [messages, setMessages] = useState([]);
   const [doctorAssigned, setDoctorAssigned] = useState(true);
   // const patientId = "38dbfec8-4a72-48a0-bca0-92f21db6840e";
@@ -129,7 +137,7 @@ export function ChatScreen() {
         </View>
       ) : (
         <View style={{ flex: 1 }} className="mt-8">
-          <RequestDoctorScreen />
+          <RequestDoctorScreen visible={true} onClose={closeModel} />
         </View>
       )}
     </>

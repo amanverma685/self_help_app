@@ -6,24 +6,46 @@ import Header from '../components/Header'
 import TextInput from '../components/TextInput'
 import Button from '../components/Button'
 import { emailValidator } from '../helpers/EmailValidator'
+import axios from 'axios'
+import { resetPassword } from '../services/URLs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
 
 export default function ResetPasswordScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
 
-  const sendResetPasswordEmail = () => {
+
+  const sendResetPasswordEmail = async() => {
     const emailError = emailValidator(email.value)
     if (emailError) {
       setEmail({ ...email, error: emailError })
       return
     }
-    navigation.navigate('LoginScreen')
+
+    const token = await AsyncStorage.getItem('token');
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+  console.log(resetPassword+email.value)
+    await axios.get(resetPassword+email.value,config).then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    Alert.alert("Email has been sent successfully","Please login using temporary password and update your password in profile section",[{text:"OK",onPress:()=>navigation.navigate('LoginScreen')}]);
+    
+    navigation.navigate('LoginScreen');
   }
 
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
       
-      <Header>Restore Password</Header>
+      <Header>Reset Password</Header>
       <TextInput
         label="E-mail address"
         returnKeyType="done"
