@@ -41,8 +41,6 @@ const SessionQuizComponent = ({route}) => {
         answer_value:answers,
         answer_options:answerOption
         }, config);  
-
-        console.log(responseData);
       
       } catch (error) 
       {

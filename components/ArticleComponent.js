@@ -44,7 +44,7 @@ const ArticleComponent = ({item}) => {
   return (
     <TouchableOpacity onPress={() => handleArticle(item)}>
       <View className="h-40 w-32 rounded-xl bg-cyan-500  m-3">
-        <ImageBackground source={{ uri: articleItem.articleThumbnail }} className=" flex-1 bg-cover  justify-center" />
+        <ImageBackground source={{ uri: articleItem.articleThumbnail===null?"":articleItem.articleThumbnail }} className=" flex-1 bg-cover  justify-center" />
         <Text className="justify-center text-center text-lg"> {articleItem.articleType}</Text>
       </View>
     </TouchableOpacity>

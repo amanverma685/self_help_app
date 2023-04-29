@@ -6,8 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SessionButtonComponent from '../components/SessionButtonComponent';
 
-
-
 const SessionScreen = ({navigation}) => {
 
   const [currentSession,setCurrentSession]=useState(1);
@@ -38,8 +36,6 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-
-        console.log(res)
         if(res.data.weekDone === -1)
         {
           setSelectedButtonIndex(res.data.weekDone);
@@ -93,8 +89,6 @@ const SessionScreen = ({navigation}) => {
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
         setSessionData(res.data);
-        console.log(sessionData);
-
     })
       .catch(err => {
         console.log(err)});

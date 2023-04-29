@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,FlatList,Image,ActivityIndicator } from 'react-native'
+import { View, Text,StyleSheet,FlatList,Image,ActivityIndicator, } from 'react-native'
 import React,{useEffect,useState} from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import PredefinedArticles from '../components/PredefinedArticles';
 import { getDoctorSuggestedArticle } from '../services/URLs';
 import axios from 'axios';
+import { userAppUsage } from '../services/URLs';
 
 const HomeScreen = ({navigation}) => {
   

@@ -13,7 +13,6 @@ const SessionButtonComponent = ({item,index,currentSession,currentWeek,navigatio
   
 
   const navigateToQuizScreen=()=>{
-    console.log(index)
     if(index >= currentSession)
     return(
       Alert.alert("Please complete the previous session first","Try to complete the previous sessions first and then try this session again.Hope you are enjoying.",[

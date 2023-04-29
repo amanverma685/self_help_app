@@ -1,4 +1,4 @@
-const baseURL = "https://53f1-2a09-bac5-3b4b-101e-00-19b-14a.ngrok-free.app";
+const baseURL = "https://c6a6-2a09-bac5-3b48-18be-00-277-47.ngrok-free.app";
 
 export const loginURL = baseURL+"/login";
 
@@ -37,3 +37,5 @@ export const postWeekAndSessionResponse = baseURL+"/user/post/question-answers";
 export const getSessionsInAWeek = baseURL + "/user/get"; // {{patientId}}/full-week/{{weekNumber}}
 
 export const resetPassword = baseURL +"/forgot-password/";
+
+export const userAppUsage = baseURL+"/user/update-timestamp";
