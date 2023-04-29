@@ -1,5 +1,5 @@
 import { View, Text,StyleSheet,FlatList,Image,ActivityIndicator, } from 'react-native'
-import React,{useEffect,useState} from 'react'
+import React,{useContext, useEffect,useState} from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { RefreshControl, ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { Avatar, Button, IconButton } from "react-native-paper";
@@ -11,8 +11,9 @@ import FlipCardComponent from '../components/FlipCard';
 import ArticleComponent from '../components/ArticleComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PredefinedArticles from '../components/PredefinedArticles';
-import { getDoctorSuggestedArticle } from '../services/URLs';
+import { getDoctorSuggestedArticle, baseURL } from '../services/URLs';
 import axios from 'axios';
+import { GlobalContext } from '../services/GlobalContext';
 
 const HomeScreen = ({navigation}) => {
   
@@ -25,14 +26,36 @@ const HomeScreen = ({navigation}) => {
   const [suggestedArticle,setSuggestedArticle]=useState([]);
   const [userId,setUserId]=useState("");
 
+  //this is device stoken
+  const {expoPushToken} = useContext(GlobalContext)
+
   useEffect(() => {
     getUserID();
     getTenRandomJokes();
     getArticleList();
+    //api to save device token in database
+    saveDeviceToken();
 
     
 
   }, []);
+
+  const saveDeviceToken = async() => {
+    // console.log('save device token called with token = ', expoPushToken, 'and', userId)
+    await axios.post(`${baseURL}/add-device-token`,
+    {
+      patientId: userId,
+      token: expoPushToken
+    },{
+      headers:{
+        'ngrok-skip-browser-warning':'true'
+      }
+    })
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch(err => console.log(err))
+  }
 
   const getTenRandomJokes = async () => {
     
@@ -88,6 +111,7 @@ const HomeScreen = ({navigation}) => {
 
   const handleRefresh = () => {
     getTenRandomJokes();
+    saveDeviceToken();
   };
 
   const handleRefreshDoctorSuggestion=()=>
