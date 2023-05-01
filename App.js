@@ -87,6 +87,7 @@ const App = () => {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [appEntryTimeStamp, setAppEntryTime] = useState('');
 
   //function to store token into the database
   const storeToken = async (token) => {
@@ -98,6 +99,8 @@ const App = () => {
   };
 
   useEffect(() => {
+    let entryTime = new Date();
+    setAppEntryTime(entryTime);
     registerForPushNotificationsAsync().then((token) => {
       setExpoPushToken(token);
       storeToken(token);
@@ -140,7 +143,7 @@ const App = () => {
 
   return (
     isAppFirstLaunched != null && (
-      <GlobalContext.Provider value={{expoPushToken}}>
+      <GlobalContext.Provider value={{expoPushToken, appEntryTimeStamp}}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             {isAppFirstLaunched && (
