@@ -37,7 +37,7 @@ const SessionQuizComponent = ({route}) => {
       const responseData = await axios.post(postInitialSessionResponse, {
         patientId:patientId,
         weekNumber:weekNumber,
-        sessionNumber:sessionNumber,
+        sessionNumber:(sessionNumber)%5,
         answer_value:answers,
         answer_options:answerOption
         }, config);  

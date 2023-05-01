@@ -78,6 +78,7 @@ const InitialQuizScreen = ({ onPress }) => {
         answer_options:answerOption
         }, config);  
       
+      console.log(responseData);
       if(responseData.status===200)
       await AsyncStorage.setItem('initialSessionCompleted',"Yes");
 

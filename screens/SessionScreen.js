@@ -29,7 +29,7 @@ const SessionScreen = ({navigation}) => {
 
     getSessionsInSelectedWeek(currentWeek);
 
-  }, [])
+  }, [currentWeek])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
 
@@ -48,29 +48,22 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-        if(res.data.weekDone === -1 || res.data.sessionDone === -1)
-        {
+        
           setSelectedButtonIndex(res.data.weekDone);
-          setCurrentWeek(res.data.weekDone+2);
-          setCurrentSession(res.data.sessionDone+2);
-        }
-        else {
-          setSelectedButtonIndex(res.data.weekDone);
-          setCurrentWeek(res.data.weekDone+1);;
+          setCurrentWeek(res.data.weekDone+1);
           setCurrentSession(res.data.sessionDone+1);
-        }
-
+        
     })
       .catch(err => {
         console.log(err)});
         setFirstTimeCall(false);
     };
   
-  const handleButtonPress =async (index) => {
+
+  const handleButtonPress =async () => {
 
     setSelectedButtonIndex(index);
     setSelectedWeek(index+1);
-    
     
     if(currentWeek<index+1)
       return (
@@ -83,14 +76,11 @@ const SessionScreen = ({navigation}) => {
         }])
       );
 
-    else{
-      if(currentWeek>index+1)
-      setCurrentSession(6);
-      else 
-      getUserProfileData();
-      
+  
+      console.log(currentSession);
+      console.log(currentWeek);
       getSessionsInSelectedWeek(index+1) ; 
-    }
+    
   };
 
   const getSessionsInSelectedWeek=async(currentWeek)=>{
