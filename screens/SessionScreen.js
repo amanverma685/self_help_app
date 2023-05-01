@@ -21,15 +21,13 @@ const SessionScreen = ({navigation}) => {
   const [firstTimeCall,setFirstTimeCall]=useState(true);
 
   useEffect(() => {
-    
-    if(firstTimeCall===true)
-    { 
+     
       getUserProfileData();
-    }
+    
 
     getSessionsInSelectedWeek(currentWeek);
 
-  }, [currentWeek])
+  }, [])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
 
@@ -48,9 +46,18 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
-        
+          if(res.data.weekDone+1==6)
+            { setCurrentWeek(5);
+              setSelectedButtonIndex(5);
+            }
+          else 
+          {setCurrentWeek(res.data.weekDone+1);
           setSelectedButtonIndex(res.data.weekDone);
-          setCurrentWeek(res.data.weekDone+1);
+          }
+          if(res.data.sessionDone+1==6)
+          setCurrentSession(6);
+
+          else
           setCurrentSession(res.data.sessionDone+1);
         
     })
@@ -60,7 +67,7 @@ const SessionScreen = ({navigation}) => {
     };
   
 
-  const handleButtonPress =async () => {
+  const handleButtonPress =async (index) => {
 
     setSelectedButtonIndex(index);
     setSelectedWeek(index+1);
@@ -75,10 +82,7 @@ const SessionScreen = ({navigation}) => {
           style:'cancel'
         }])
       );
-
   
-      console.log(currentSession);
-      console.log(currentWeek);
       getSessionsInSelectedWeek(index+1) ; 
     
   };
@@ -93,10 +97,15 @@ const SessionScreen = ({navigation}) => {
           "ngrok-skip-browser-warning":"69420"
       }
   }
+  
   const sessionsInAWeek = getSessionsInAWeek+"/full-week/"+currentWeek;
 
   await axios.get(sessionsInAWeek,config)
       .then((res) => {
+
+        if(res.data>5)
+        setSessionData(5);
+      else
         setSessionData(res.data);
     })
       .catch(err => {
