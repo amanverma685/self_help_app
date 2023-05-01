@@ -29,6 +29,7 @@ import { GlobalContext } from "../services/GlobalContext";
 
 const HomeScreen = ({ navigation }) => {
   const appState = useRef(AppState.currentState);
+  const {appEntryTimeStamp} = useContext(GlobalContext);
 
   const [randomJokes, setRandomJokes] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -52,8 +53,6 @@ const HomeScreen = ({ navigation }) => {
 
   // =========================check app is running in background and call api if yes ==================
   useEffect(() => {
-    var entryTimeStamp = new Date();
-    // console.log("current state of app is", currentState);
     const subscription = AppState.addEventListener(
       "change",
       async (nextAppState) => {
@@ -71,13 +70,14 @@ const HomeScreen = ({ navigation }) => {
           var exitTimeStamp = new Date();
           console.log(
             "entry time is",
-            entryTimeStamp,
+            appEntryTimeStamp, //time when app was opened
             "and exit time is",
-            exitTimeStamp
+            exitTimeStamp //time when app is closed
           );
+          //sending the app opening and usage time to the server
           await axios.post(`${baseURL}/user/update-timestamp`, {
             username:email,
-            entryTime: entryTimeStamp,
+            entryTime: appEntryTimeStamp,
             exitTime: exitTimeStamp
           }, config)
           .then(res=>console.log(res.data))
