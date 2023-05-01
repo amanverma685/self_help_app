@@ -1,4 +1,4 @@
-export const baseURL = "https://6652-2a09-bac1-36c0-58-00-27d-93.ngrok-free.app";
+export const baseURL = "https://07af-2a09-bac5-3b48-18c8-00-278-5d.ngrok-free.app";
 
 export const loginURL = baseURL+"/login";
 
