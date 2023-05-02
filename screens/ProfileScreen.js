@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
+import { getUserProfile } from '../services/URLs';
+
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Card, Button, Modal } from "react-native-paper";
 import Seperator from "../components/Seperator";
@@ -16,6 +18,8 @@ import { baseURL } from "../services/URLs";
 
 
 const ProfileScreen = ({ navigation }) => {
+
+
 
   const [userDetails, setUserDetails] = useState({
     firstName: "First Name",
@@ -42,6 +46,7 @@ const ProfileScreen = ({ navigation }) => {
       setToken(token);
       setUserDetails({...userDetails,firstName:firstName, middleName:middleName, lastName:lastName, email: email, dob: dob, contact:contact})
     })();
+    getUserProfileData();
    }, []);
 
   const [emailId,setEmailId]=useState("");
@@ -50,9 +55,36 @@ const ProfileScreen = ({ navigation }) => {
   const [passwordTwo,setPasswordTwo]=useState("")
   const [currentPassword,setCurrentPassword]=useState("")
     //for showing edit profile form
-    const [showForm, setShowForm] = useState(false);
-    const [isModelVisible, setIsModalVisible] = useState(false)
-    const [isDoctorModelVisible, setIsDoctorModalVisible] = useState(false)
+  const [showForm, setShowForm] = useState(false);
+  const [isModelVisible, setIsModalVisible] = useState(false)
+  const [isDoctorModelVisible, setIsDoctorModalVisible] = useState(false)
+
+  const [doctorAssigned,setDoctorAssigned]=useState({});
+    
+    const getUserProfileData=async()=>{
+    
+      const id = await AsyncStorage.getItem('id');
+      const token = await AsyncStorage.getItem('token');
+      const userProfileURL = getUserProfile+id;
+  
+      let config = {
+        headers:{
+            Authorization:token,
+            "ngrok-skip-browser-warning":"69420"
+        }
+    }
+  
+    await axios.get(userProfileURL,config)
+        .then((res) => {
+          if (res.data.doctor === null) {
+            setDoctorAssigned(null);
+          } else {
+            setDoctorAssigned(res.data.doctor);
+          }
+      })
+        .catch(err => {
+          console.log(err)});
+      };
 
 
   const submitPassword=async()=>
@@ -146,15 +178,19 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
+          <>
+          {
+            (doctorAssigned != null) >0 && (<TouchableOpacity
             onPress={isDoctorModelVisibleFunction}
             className="bg-blue-200 rounded-lg absolute top-10 left-3"
-          >
+            >
             <View className="flex-row">
               <IconButton icon="eye" onPress={isDoctorModelVisibleFunction} />
               <Text className="mt-3 mr-2 text-lg font-bold">Your Doctor</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>)
+          }
+          </>
 
           <View className="justify-between flex-row p-6">
             <Text className="text-2xl font-bold mb-4">
@@ -236,7 +272,7 @@ const ProfileScreen = ({ navigation }) => {
 
       <Modal visible={isModelVisible} className="bg-white mt-96 rounded-t-2xl" >
         <View className="bg-white">
-            <IconButton size={32} icon='sword-cross' onPress={isModelVisibleFunction} />
+            <IconButton size={40} icon='close' onPress={isModelVisibleFunction} />
           <Text className="justify-center text-center m-4 font-bold text-lg">Change Your Password</Text>
           <Text className="ml-5">Current Password</Text>
           <TextInput
@@ -269,9 +305,13 @@ const ProfileScreen = ({ navigation }) => {
 
       <Modal visible={isDoctorModelVisible} className="bg-white mt-96 rounded-t-2xl" >
         <View className="bg-white">
-            <IconButton size={32} icon='sword-cross' onPress={isDoctorModelVisibleFunction} />
-          <Text className="justify-center text-center m-4 font-bold text-lg">View Your Doctor</Text>
-          
+            <IconButton size={40} icon='close' onPress={isDoctorModelVisibleFunction} />
+          <Text className="justify-center text-center mb-8 font-bold text-3xl">Your Companion</Text>
+          <Text  className="justify-center text-center font-bold mt-2 text-lg">Name :- {doctorAssigned.firstName} {doctorAssigned.middleName}</Text>
+          <Text  className="justify-center text-center font-bold mt-2 text-lg">Specialisation :- {doctorAssigned.specialisation} </Text>
+          <Text  className="justify-center text-center font-bold mt-2 text-lg">Doctor Degree :- {doctorAssigned.degree} </Text>
+          <Text  className="justify-center text-center font-bold mt-2 text-lg">Email :-{doctorAssigned.email} </Text>
+
         </View>
       </Modal>
     </>
