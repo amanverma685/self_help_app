@@ -18,15 +18,18 @@ const SessionScreen = ({navigation}) => {
   const [selectedButtonIndex, setSelectedButtonIndex] = useState(0);
   const [sessionData,setSessionData]= useState([]);
   const [isLoading,setIsLoading]=useState(true);
-  const isFocused = useIsFocused();
   const [firstTimeCall,setFirstTimeCall]=useState(true);
-
+  const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
-    
+
+    if (isFocused) {
+      setRefresh(refresh => !refresh);
+    }
     getUserProfileData();
     getSessionsInSelectedWeek(currentWeek);
 
-  }, [selectedButtonIndex])
+  }, [selectedButtonIndex,isFocused])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
 

@@ -15,7 +15,8 @@ const SessionQuizComponent = ({route}) => {
   const [answerOption,setAnswerOption]=useState([]);
   const [weekNumber,setWeekNumber]=useState(route.params.item.currentWeek)
   const [sessionNumber,setSessionNumber]=useState(route.params.item.currentSession)
-  
+  const [isNextButtonInvisible,setIsNexButtonVisible]=useState(false)
+
   const handleSubmit=async()=>{
     const token = await AsyncStorage.getItem('token');
     const patientId = await AsyncStorage.getItem('id');
@@ -62,6 +63,7 @@ const SessionQuizComponent = ({route}) => {
     }
 
   const handleAnswer = (optionValue,option) => {
+    setIsNexButtonVisible(true);
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = optionValue;
     setAnswers(newAnswers);
@@ -74,8 +76,11 @@ const SessionQuizComponent = ({route}) => {
 
   const handleNextQuestion = () => {
     
+    setIsNexButtonVisible(false);
     if(currentQuestion== questions.length-2)
-    { setIsVisible(true); }
+    { setIsVisible(true); 
+      setIsNexButtonVisible(true);  
+    }
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -112,7 +117,9 @@ const SessionQuizComponent = ({route}) => {
       </View>
           <View className="flex-row justify-between ml-3 mr-3 pt-3">
             <Button title="Previous" onPress={handlePreviousQuestion} />
-            <Button title="  Next  " onPress={handleNextQuestion} />
+            <>
+            {(isNextButtonInvisible) && <Button title="  Next  " onPress={handleNextQuestion} />}
+          </>
           </View>
           <View className="w-36 text-white font-bold py-2 px-4 rounded ml-28 justify-center">
           {isVisible && ( 

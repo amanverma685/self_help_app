@@ -19,7 +19,8 @@ const InitialQuizScreen = ({ onPress }) => {
   const [answerOption,setAnswerOption]=useState([]);
   const [isModelVisible,setIsModelVisible]=useState(false);
   const [doctorList,setDoctorList]=([]);
-  
+  const [isNextButtonInvisible,setIsNexButtonVisible]=useState(false)
+
   useEffect(() => {
     setFirstNameMethod();
     getInitialQuiz();
@@ -69,14 +70,16 @@ const InitialQuizScreen = ({ onPress }) => {
     });
 
     try 
-    {
-      const responseData = await axios.post(postInitialSessionResponse, {
+    { 
+      const data = {
         patientId:patientId,
         weekNumber:0,
         sessionNumber:0,
         answer_value:answers,
         answer_options:answerOption
-        }, config);  
+      }
+      console.log(data);
+      const responseData = await axios.post(postInitialSessionResponse, data, config);  
       
       console.log(responseData);
       if(responseData.status===200)
@@ -95,6 +98,7 @@ const InitialQuizScreen = ({ onPress }) => {
     }
 
   const handleAnswer = (optionValue,option) => {
+    setIsNexButtonVisible(true);
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = optionValue;
     setAnswers(newAnswers);
@@ -110,8 +114,12 @@ const InitialQuizScreen = ({ onPress }) => {
   }
 
   const handleNextQuestion = () => {
+
+    setIsNexButtonVisible(false);
     if(currentQuestion== questions.length-2)
-    { setIsVisible(true); }
+    { setIsVisible(true); 
+      setIsNexButtonVisible(true);
+    }
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -161,7 +169,10 @@ const InitialQuizScreen = ({ onPress }) => {
             </>
           <View className="flex-row justify-between ml-3 mr-3 pt-3">
             <Button title="Previous" onPress={handlePreviousQuestion} />
-            <Button title="  Next  " onPress={handleNextQuestion} />
+            <>
+            {(isNextButtonInvisible) && <Button title="  Next  " onPress={handleNextQuestion} />}
+          </>
+
           </View>
           <View className="w-36 text-white font-bold py-2 px-4 rounded ml-28 justify-center">
           {isVisible && (

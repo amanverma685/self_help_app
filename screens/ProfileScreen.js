@@ -11,24 +11,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Card, Button, Modal } from "react-native-paper";
 import Seperator from "../components/Seperator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { baseURL } from "../services/URLs";
 
 
 const ProfileScreen = ({ navigation }) => {
-  useEffect(() => {
-    (async() => {
-      const email = await AsyncStorage.getItem('email');
-      setEmailId(email);
-    })();
-   }, []);
 
-  const [emailId,setEmailId]=useState("");
-  const [passwordOne,setPasswordOne]=useState("")
-  const [passwordTwo,setPasswordTwo]=useState("")
-  const [currentPassword,setCurrentPassword]=useState("")
-    //for showing edit profile form
-    const [showForm, setShowForm] = useState(false);
-    const [isModelVisible, setIsModalVisible] = useState(false)
-  
   const [userDetails, setUserDetails] = useState({
     firstName: "First Name",
     middleName: "Middle Name",
@@ -40,19 +28,62 @@ const ProfileScreen = ({ navigation }) => {
     address: "IIIT bangalore",
     password: "",
   });
+  useEffect(() => {
+    (async() => {
+        const email = await AsyncStorage.getItem('email');
+      // const id = await AsyncStorage.setItem("id");
+        const firstName = await AsyncStorage.getItem("firstName");
+        const contact = await AsyncStorage.getItem("contact");
+        const dob = await AsyncStorage.getItem("dob");
+        const middleName = await AsyncStorage.getItem("middleName");
+        const lastName = await AsyncStorage.getItem("lastName");
+        const token=await AsyncStorage.getItem("token");
+      setEmailId(email);
+      setToken(token);
+      setUserDetails({...userDetails,firstName:firstName, middleName:middleName, lastName:lastName, email: email, dob: dob, contact:contact})
+    })();
+   }, []);
+
+  const [emailId,setEmailId]=useState("");
+  const [token, setToken] = useState("")
+  const [passwordOne,setPasswordOne]=useState("")
+  const [passwordTwo,setPasswordTwo]=useState("")
+  const [currentPassword,setCurrentPassword]=useState("")
+    //for showing edit profile form
+    const [showForm, setShowForm] = useState(false);
+    const [isModelVisible, setIsModalVisible] = useState(false)
+    const [isDoctorModelVisible, setIsDoctorModalVisible] = useState(false)
 
 
-  const submitPassword=()=>
+  const submitPassword=async()=>
   { 
 
     console.log(emailId)
     if(passwordOne===passwordTwo)
     {
-
+      await axios.post(`${baseURL}/user/reset-password`, {
+        email: emailId,
+        oldPassword: currentPassword,
+        newPassword: passwordTwo
+      }, {
+        headers:{
+          Authorization: token,
+          "ngrok-skip-browser-warning":"true"
+        }
+      })
+      .then((res)=>{
+        console.log(res.data);
+        Alert.alert("Successfull", "Your password has been changed successfully", [
+          {
+            text: "OK",
+            onPress: handleLogout,
+          },
+        ]);
+      }).catch(err=>console.log(err))
     }
     else 
     return (
-      Alert.alert("Password didn't match Please enter matching password..","",[{
+      Alert.alert("Password didn't match Please enter correct password..","",[{
         text:"Try Again",
         onPress:null
       },
@@ -61,6 +92,11 @@ const ProfileScreen = ({ navigation }) => {
       onPress:null
     }])
     )
+  }
+
+  const isDoctorModelVisibleFunction = () => {
+
+    setIsDoctorModalVisible(!isDoctorModelVisible);
   }
 
   const isModelVisibleFunction = () => {
@@ -107,6 +143,16 @@ const ProfileScreen = ({ navigation }) => {
           >
             <View className="flex-row">
               <IconButton icon="logout" onPress={handleLogout} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={isDoctorModelVisibleFunction}
+            className="bg-blue-200 rounded-lg absolute top-10 left-3"
+          >
+            <View className="flex-row">
+              <IconButton icon="eye" onPress={isDoctorModelVisibleFunction} />
+              <Text className="mt-3 mr-2 text-lg font-bold">Your Doctor</Text>
             </View>
           </TouchableOpacity>
 
@@ -218,6 +264,14 @@ const ProfileScreen = ({ navigation }) => {
           <Button onPress={submitPassword} className="justify-center text-purple-700 justify-items-center mx-20 mt-4 mb-40 ">
             <Text className="text-lg">Submit Password</Text>
           </Button>
+        </View>
+      </Modal>
+
+      <Modal visible={isDoctorModelVisible} className="bg-white mt-96 rounded-t-2xl" >
+        <View className="bg-white">
+            <IconButton size={32} icon='sword-cross' onPress={isDoctorModelVisibleFunction} />
+          <Text className="justify-center text-center m-4 font-bold text-lg">View Your Doctor</Text>
+          
         </View>
       </Modal>
     </>

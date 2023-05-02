@@ -20,7 +20,8 @@ const RequestDoctorScreen = ({ visible, onClose }) => {
     
     const [doctorData,setDoctorData] = useState([]);
     
-    useEffect(() => {    
+    useEffect(() => {   
+       
         getListOfDoctors();
     }, [])
 

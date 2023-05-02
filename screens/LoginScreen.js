@@ -137,7 +137,6 @@ export default function LoginScreen({ navigation }) {
   return (
     <Background>
       <Header>Login </Header>
-      <View className=" w-20"></View>
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -163,14 +162,14 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           onPress={() => navigation.navigate("ResetPasswordScreen")}
         >
-          <Text style={styles.forgot}>Forgot your password?</Text>
+          <Text className="text-lg" style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
       <Button mode="contained" isDisabled={isDisabled} onPress={onLoginPressed}>
         Login
       </Button>
       <View style={styles.row}>
-        <Text>Don't have an account? </Text>
+        <Text style={styles.forgot} >Don't have an account? </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("RegistrationScreen")}
         >
@@ -191,7 +190,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   forgot: {
-    fontSize: 13,
+    fontSize: 18,
 
     color: theme.colors.secondary,
   },

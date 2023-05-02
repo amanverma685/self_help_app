@@ -14,15 +14,12 @@ import {
 import { db } from "../services/FirebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import RequestDoctorScreen from "./RequestDoctorScreen";
+import { getUserProfile } from '../services/URLs';
+import axios from "axios";
 
 export function ChatScreen({navigation}) {
 
-  const closeModel=()=>{
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'LandingScreen'}],
-    });
-  }
+
   const [isModelVisible, setIsModelVisible] = useState(false);
   const [messages, setMessages] = useState([]);
   const [doctorAssigned, setDoctorAssigned] = useState(true);
@@ -35,6 +32,45 @@ export function ChatScreen({navigation}) {
   const [chatId, setChatId] = useState("");
   const [useChat, setUseChat] = useState(false);
   const [patName, setPatName] = useState('');
+
+
+  const getUserProfileData=async()=>{
+    
+    const id = await AsyncStorage.getItem('id');
+    const token = await AsyncStorage.getItem('token');
+    const userProfileURL = getUserProfile+id;
+
+    let config = {
+      headers:{
+          Authorization:token,
+          "ngrok-skip-browser-warning":"69420"
+      }
+  }
+
+  await axios.get(userProfileURL,config)
+      .then((res) => {
+        if (res.data.doctor === null) {
+          setDoctorAssigned(false);
+        } else {
+          setDoctorAssigned(true);
+        }
+    })
+      .catch(err => {
+        console.log(err)});
+    };
+
+    
+  useEffect(() => {
+    getUserProfileData();
+  }, [])
+  
+
+  const closeModel=()=>{
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'LandingScreen'}],
+    });
+  }
 
   //this function initializes the chat details required for connecting to the firease
   const createChat = async () => {
