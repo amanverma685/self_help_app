@@ -65,7 +65,7 @@ export default function ResetPasswordScreen({ navigation }) {
         onPress={sendResetPasswordEmail}
         style={{ marginTop: 16 }}
       >
-        Send Instructions
+        Send Temporary Password
       </Button>
     </Background>
   )

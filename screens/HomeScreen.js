@@ -85,7 +85,11 @@ const HomeScreen = ({ navigation }) => {
         }
       }
     );
-  }, []);
+    return()=>{
+      subscription.remove();
+    }
+  },
+   []);
 
   const saveDeviceToken = async () => {
     // console.log('save device token called with token = ', expoPushToken, 'and', userId)

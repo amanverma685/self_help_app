@@ -5,9 +5,10 @@ import { getSessionsInAWeek, getUserProfile } from '../services/URLs';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import SessionButtonComponent from '../components/SessionButtonComponent';
-import { BackHandler } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { async } from '@firebase/util';
+import { Avatar, Button, IconButton } from "react-native-paper";
+import { Icon } from 'react-native-elements';
+
 
 const SessionScreen = ({navigation}) => {
 
@@ -21,19 +22,17 @@ const SessionScreen = ({navigation}) => {
   const [firstTimeCall,setFirstTimeCall]=useState(true);
 
   useEffect(() => {
-     
-      getUserProfileData();
     
-
+    getUserProfileData();
     getSessionsInSelectedWeek(currentWeek);
 
-  }, [])
+  }, [selectedButtonIndex])
 
   const weekButtons =["Week 1","Week 2","Week 3","Week 4","Week 5"]
 
   
   const getUserProfileData=async()=>{
-
+    setIsLoading(true);
     const id = await AsyncStorage.getItem('id');
     const token = await AsyncStorage.getItem('token');
     const userProfileURL = getUserProfile+id;
@@ -46,6 +45,8 @@ const SessionScreen = ({navigation}) => {
   }
   await axios.get(userProfileURL,config)
       .then((res) => {
+        console.log(res.data.weekDone)
+
           if(res.data.weekDone+1==6)
             { setCurrentWeek(5);
               setSelectedButtonIndex(5);
@@ -64,6 +65,7 @@ const SessionScreen = ({navigation}) => {
       .catch(err => {
         console.log(err)});
         setFirstTimeCall(false);
+      setIsLoading(false);
     };
   
 
@@ -121,6 +123,9 @@ const SessionScreen = ({navigation}) => {
             <View className="pt-3 mt-8">
               <View className="flex-row m-4 justify-between">
                   <Text className="font-bold text-lg">Hey Thanks for coming</Text>
+                  <TouchableOpacity onPress={getUserProfileData}>
+                    <Icon name='refresh' size={25}/>
+                  </TouchableOpacity>
               </View>
             </View>
       </View>
@@ -164,6 +169,7 @@ const SessionScreen = ({navigation}) => {
     
   );
 };
+
 
 export default SessionScreen;
 

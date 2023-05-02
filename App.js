@@ -117,12 +117,12 @@ const App = () => {
       });
 
     //========code to unsubscribe=======
-    // return () => {
-    //   Notifications.removeNotificationSubscription(
-    //     notificationListener.current
-    //   );
-    //   Notifications.removeNotificationSubscription(responseListener.current);
-    // };
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
   // ==================================================================================================
 
@@ -152,7 +152,7 @@ const App = () => {
                 component={OnboardingScreen}
               />
             )}
-
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen
               name="RegistrationScreen"
@@ -184,7 +184,6 @@ const App = () => {
             />
             <Stack.Screen name="ReadingScreen" component={ReadingScreen} />
             <Stack.Screen name="ChatScreen" component={ChatScreen} />
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen
               name="RequestDoctorScreen"
               component={RequestDoctorScreen}
