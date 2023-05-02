@@ -10,10 +10,18 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, Card, Button, Modal } from "react-native-paper";
 import Seperator from "../components/Seperator";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const ProfileScreen = ({ navigation }) => {
-  useEffect(() => { }, []);
+  useEffect(() => {
+    (async() => {
+      const email = await AsyncStorage.getItem('email');
+      setEmailId(email);
+    })();
+   }, []);
 
+  const [emailId,setEmailId]=useState("");
   const [passwordOne,setPasswordOne]=useState("")
   const [passwordTwo,setPasswordTwo]=useState("")
   const [currentPassword,setCurrentPassword]=useState("")
@@ -35,7 +43,9 @@ const ProfileScreen = ({ navigation }) => {
 
 
   const submitPassword=()=>
-  {
+  { 
+
+    console.log(emailId)
     if(passwordOne===passwordTwo)
     {
 
