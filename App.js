@@ -152,7 +152,6 @@ const App = () => {
                 component={OnboardingScreen}
               />
             )}
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen
               name="RegistrationScreen"
@@ -166,6 +165,7 @@ const App = () => {
               name="AudioPlayerScreen"
               component={AudioPlayerScreen}
             />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen
               name="InitialQuizScreen"
               component={InitialQuizScreen}

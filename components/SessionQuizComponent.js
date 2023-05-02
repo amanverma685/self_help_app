@@ -34,10 +34,12 @@ const SessionQuizComponent = ({route}) => {
     try 
     {
       // Find week number and session number 
+      console.log("weekNummber --- "+weekNumber);
+      console.log("sessionNumber ----- "+sessionNumber);
       const responseData = await axios.post(postInitialSessionResponse, {
         patientId:patientId,
         weekNumber:weekNumber,
-        sessionNumber:(sessionNumber)%5,
+        sessionNumber:sessionNumber,
         answer_value:answers,
         answer_options:answerOption
         }, config);  
@@ -71,6 +73,7 @@ const SessionQuizComponent = ({route}) => {
   };
 
   const handleNextQuestion = () => {
+    
     if(currentQuestion== questions.length-2)
     { setIsVisible(true); }
     if (currentQuestion < questions.length - 1) {

@@ -76,8 +76,8 @@ const SessionScreen = ({navigation}) => {
     
     if(currentWeek<index+1)
       return (
-        Alert.alert("Are you want to skip sessions?",
-        "Sorry you are not allowed skip sessions. Please complete the previous sessions and then move forward. Thank you",
+        Alert.alert("Do you want to skip Week?",
+        "Sorry you are not allowed skip Weeks. Please complete the previous sessions and then move forward. Thank you",
         [{
           text:"Yes I will complete previous one first",
           onPress:()=>{},
@@ -90,6 +90,7 @@ const SessionScreen = ({navigation}) => {
   };
 
   const getSessionsInSelectedWeek=async(currentWeek)=>{
+    console.log(currentWeek);
     setIsLoading(true);
     const token = await AsyncStorage.getItem('token');
 

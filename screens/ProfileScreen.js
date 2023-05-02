@@ -200,7 +200,7 @@ const ProfileScreen = ({ navigation }) => {
                   onChangeText={(e) =>setCurrentPassword(e)}
                   className="border-2 mx-5 border-gray-400 p-2 rounded"
           />
-          <Text className="ml-5">New Password</Text>
+          <Text className="ml-5 mt-2">New Password</Text>
           <TextInput
                   value={passwordOne}
                   multiline={true}
